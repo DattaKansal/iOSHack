@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    @State private var hostSignUp: Bool = false
-    @State private var userSignUp: Bool = false
+    @State private var hostSignup: Bool = false
+    @State private var userSignup: Bool = false
     var body: some View {
         NavigationStack {
             VStack {
-                NavigationLink(destination: SignUpView(status: .host), isActive: $hostSignUp) {
+                NavigationLink(destination: SignupView(status: .host), isActive: $hostSignup) {
                 }
-                NavigationLink(destination: SignUpView(status: .user), isActive: $userSignUp) {
+                NavigationLink(destination: SignupView(status: .user), isActive: $userSignup) {
                 }
                 Spacer()
 
@@ -41,7 +41,7 @@ struct WelcomeView: View {
 
                 // 'Attend an Event' Button
                 Button(action: {
-                    self.userSignUp = true;
+                    self.userSignup = true;
                 }) {
                     Text("Attend an Event")
                         .frame(maxWidth: .infinity)
@@ -71,7 +71,7 @@ struct WelcomeView: View {
 
                 // 'Host an Event' Button
                 Button(action: {
-                    self.hostSignUp = true;
+                    self.hostSignup = true;
                 }) {
                     Text("Host an Event")
                         .frame(maxWidth: .infinity)
@@ -86,6 +86,7 @@ struct WelcomeView: View {
             }
             .background(Color.primaryBackground)
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
