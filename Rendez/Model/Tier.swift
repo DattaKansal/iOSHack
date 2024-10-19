@@ -9,7 +9,7 @@ import Foundation
 
 struct Tier: Identifiable {
     let id = UUID()
-    let name : String
-    let price : Double
-    let numTickets : Int
+    var name : String
+    var price : Double
+    var numTickets : Int
 }
