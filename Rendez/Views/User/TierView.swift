@@ -22,13 +22,14 @@ struct TierView: View {
                     .font(.caption)
             }
             Spacer()
-            HStack {
+            HStack(spacing: 0) {
                 Button(action: {
                     if count > 0 {
                         onCountChanged(count - 1)
                     }
                 }) {
                     Image(systemName: "minus.circle")
+                        .tint(Color.primary)
                 }
                 Text("\(count)")
                     .frame(width: 30)
@@ -38,14 +39,15 @@ struct TierView: View {
                     }
                 }) {
                     Image(systemName: "plus.circle")
+                        .tint(Color.primary)
                 }
             }
         }
         .padding(15)
-        .background(count > 0 ? Color.thirdBackground : Color.thirdBackground.opacity(0.5))
+        .background(count > 0 ? Color.secondary : Color.thirdBackground.opacity(0.5))
         .cornerRadius(30)
         .overlay(
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: 30)
                 .stroke(count > 0 ? Color.primary : Color.clear, lineWidth: 2)
         )
     }

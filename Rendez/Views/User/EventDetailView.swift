@@ -151,6 +151,9 @@ struct EventDetailView: View {
                 .background(Color.primaryBackground)
                 .navigationBarTitleDisplayMode(.inline)
             }
+            .edgesIgnoringSafeArea(.top)
+            .background(Color.primaryBackground)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
