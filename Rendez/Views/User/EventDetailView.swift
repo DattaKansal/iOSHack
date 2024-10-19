@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EventDetailView: View {
     let event: Event
+    @State private var tierCounts: [UUID: Int] = [:]
     
     var body: some View {
         ScrollView {
@@ -59,22 +60,9 @@ struct EventDetailView: View {
                             .foregroundColor(.secondary)
                         
                         ForEach(event.tiers.compactMap { $0 }) { tier in
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(tier.name)
-                                        .font(.subheadline)
-                                        .fontWeight(.semibold)
-                                    Text("$\(String(format: "%.2f", tier.price))")
-                                        .font(.caption)
-                                }
-                                Spacer()
-                                Text("\(tier.numTickets) available")
-                                    .font(.caption)
+                            TierView(tier: tier, count: tierCounts[tier.id] ?? 0) { newCount in
+                                tierCounts[tier.id] = newCount
                             }
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 12)
-                            .background(Color.secondBackground)
-                            .cornerRadius(8)
                         }
                     }
                     
@@ -90,6 +78,7 @@ struct EventDetailView: View {
                             .cornerRadius(10)
                     }
                     .padding(.top)
+                    .disabled(tierCounts.values.reduce(0, +) == 0)
                 }
                 .padding()
             }
@@ -99,3 +88,4 @@ struct EventDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
