@@ -73,7 +73,6 @@ struct EventView: View {
                     .scrollIndicators(.hidden)
                     
                 }
-                Spacer()
             }
             .background(Color.primaryBackground)
         }
