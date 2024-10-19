@@ -1,36 +1,11 @@
 //
-//  UserHome.swift
+//  EventView.swift
 //  Rendez
 //
-//  Created by Datta Kansal on 10/18/24.
+//  Created by Datta Kansal on 10/19/24.
 //
 
 import SwiftUI
-
-struct UserHome: View {
-    @StateObject private var viewModel = EventsViewModel()
-
-    var body: some View {
-        TabView {
-            EventView()
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                }
-                .toolbarBackground(Color.secondary, for: .tabBar)
-                .toolbarBackground(.visible, for: .tabBar)
-
-            TicketView()
-                .tabItem {
-                    Label("Tickets", systemImage: "ticket")
-                }
-                .toolbarBackground(Color.secondary, for: .tabBar)
-                .toolbarBackground(.visible, for: .tabBar)
-
-        }
-        .tint(Color.primaryBackground)
-
-    }
-}
 
 struct EventView: View {
     @StateObject private var viewModel = EventsViewModel()
@@ -67,28 +42,9 @@ struct EventView: View {
                     .scrollIndicators(.hidden)
                     
                 }
+                Spacer()
             }
             .background(Color.primaryBackground)
         }
     }
-}
-
-struct TicketView: View {
-    var body: some View {
-        VStack{
-
-        }
-    }
-}
-
-struct ThirdView: View {
-    var body: some View {
-        VStack{
-
-        }
-    }
-}
-
-#Preview {
-    UserHome()
 }

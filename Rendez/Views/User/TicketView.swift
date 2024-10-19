@@ -1,47 +1,21 @@
 //
-//  UserHome.swift
+//  TicketView.swift
 //  Rendez
 //
-//  Created by Datta Kansal on 10/18/24.
+//  Created by Datta Kansal on 10/19/24.
 //
 
 import SwiftUI
 
-struct UserHome: View {
+struct TicketView: View {
     @StateObject private var viewModel = EventsViewModel()
-
-    var body: some View {
-        TabView {
-            EventView()
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                }
-                .toolbarBackground(Color.secondary, for: .tabBar)
-                .toolbarBackground(.visible, for: .tabBar)
-
-            TicketView()
-                .tabItem {
-                    Label("Tickets", systemImage: "ticket")
-                }
-                .toolbarBackground(Color.secondary, for: .tabBar)
-                .toolbarBackground(.visible, for: .tabBar)
-
-        }
-        .tint(Color.primaryBackground)
-
-    }
-}
-
-struct EventView: View {
-    @StateObject private var viewModel = EventsViewModel()
-    @State private var userHome: Bool = false
     var body: some View {
         NavigationStack{
-            NavigationLink(destination: UserHome(), isActive: $userHome) {}
+//            NavigationLink(destination: UserHome(), isActive: $userHome) {}
             VStack {
                 Spacer()
                 HStack {
-                    Text("Events")
+                    Text("Tickets")
                         .font(.system(size: 40))
                         .bold()
                         .foregroundColor(Color.white)
@@ -67,28 +41,14 @@ struct EventView: View {
                     .scrollIndicators(.hidden)
                     
                 }
+                Spacer()
             }
             .background(Color.primaryBackground)
         }
     }
 }
 
-struct TicketView: View {
-    var body: some View {
-        VStack{
-
-        }
-    }
-}
-
-struct ThirdView: View {
-    var body: some View {
-        VStack{
-
-        }
-    }
-}
-
 #Preview {
-    UserHome()
+    TicketView()
 }
+
