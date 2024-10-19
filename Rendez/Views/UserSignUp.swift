@@ -25,8 +25,6 @@ struct UserSignUp: View {
                 .fontWeight(.medium)
                 .foregroundColor(.white)
 
-            
-
             // 'Attend an Event' Button
             Button(action: {
                 // Action for attend event
