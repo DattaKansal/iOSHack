@@ -16,7 +16,7 @@ extension Color {
 }
 
 @main
-struct iOSHackApp: App {
+struct Rendez: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
