@@ -51,6 +51,7 @@ struct TicketView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 
     // Function to fetch events

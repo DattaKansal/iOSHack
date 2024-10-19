@@ -35,7 +35,7 @@ class UserViewModel: ObservableObject {
         let snapshot = try await query.getDocuments()
 
         let events = snapshot.documents.compactMap { document -> Event? in
-            print(document.documentID)
+            let docID = document.documentID
             let docData = document.data()
             let startDateTimeString =
                 docData["start_date_time"] as? String ?? ""
@@ -66,7 +66,7 @@ class UserViewModel: ObservableObject {
             return Event(
                 title: title, description: description, price: price,
                 orgName: orgName, address: address, date: startDateTimeString,
-                imageName: imageName, tiers: [])
+                imageName: imageName, tiers: [], docID: docID)
         }
         return events
     }
@@ -89,7 +89,7 @@ class UserViewModel: ObservableObject {
         let snapshot = try await query.getDocuments()
 
         let events = snapshot.documents.compactMap { document -> Event? in
-            print(document.documentID)
+            let docID = document.documentID
             let docData = document.data()
             let startDateTimeString =
                 docData["start_date_time"] as? String ?? ""
@@ -120,7 +120,7 @@ class UserViewModel: ObservableObject {
             return Event(
                 title: title, description: description, price: price,
                 orgName: orgName, address: address, date: startDateTimeString,
-                imageName: imageName, tiers: [])
+                imageName: imageName, tiers: [], docID: docID)
         }
         return events
     }
@@ -143,7 +143,7 @@ class UserViewModel: ObservableObject {
         let snapshot = try await query.getDocuments()
 
         let events = snapshot.documents.compactMap { document -> Event? in
-            print(document.documentID)
+            let docID = document.documentID
             let docData = document.data()
             let startDateTimeString =
                 docData["start_date_time"] as? String ?? ""
@@ -171,10 +171,9 @@ class UserViewModel: ObservableObject {
             guard startDateTime < currentDate else {
                 return nil
             }
-            return Event(
-                title: title, description: description, price: price,
+            return Event(title: title, description: description, price: price,
                 orgName: orgName, address: address, date: startDateTimeString,
-                imageName: imageName, tiers: [])
+                         imageName: imageName, tiers: [], docID: docID)
         }
         return events
     }
