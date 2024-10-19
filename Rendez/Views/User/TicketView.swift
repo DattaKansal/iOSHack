@@ -28,7 +28,7 @@ struct TicketView: View {
                     ScrollView(.horizontal) {
                         HStack(spacing: 15) {
                             ForEach(events ?? []) { event in
-                                NavigationLink(destination: EventDetailView(event: event)) {
+                                NavigationLink(destination: TicketDetailView(event: event)) {
                                     EventCard(event: event)
                                         .shadow(color: Color.black.opacity(0.6), radius: 10, x: 0, y: 10)
                                 }
@@ -51,6 +51,7 @@ struct TicketView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 
     // Function to fetch events

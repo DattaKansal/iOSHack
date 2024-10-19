@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EventDetailView: View {
-    let event: Event
+    var event: Event
     @State private var tierCounts: [UUID: Int] = [:]
     
     var body: some View {
@@ -103,7 +103,7 @@ struct EventDetailView: View {
 
 
 #Preview {
-    EventDetailView(event: Event(title: "Robot Speaker Event", description: "Have Fun Learning and playing with some robots sponsored by Suraj Mehrotra and his family.", price: 0, orgName: "Robojackets", address: "SCC", date: "Nov 1 8-10 pm", imageName: "robot", tiers: [Tier(name: "Tier 1", price: 15, numTickets: 50), Tier(name: "Tier 2", price: 30, numTickets: 100)]))
+    EventDetailView(event: Event(title: "Robot Speaker Event", description: "Have Fun Learning and playing with some robots sponsored by Suraj Mehrotra and his family.", price: 0, orgName: "Robojackets", address: "SCC", date: "Nov 1 8-10 pm", imageName: "robot", tiers: [Tier(name: "Tier 1", price: 15, numTickets: 50), Tier(name: "Tier 2", price: 30, numTickets: 100)], docID: "robot"))
 }
 
 
