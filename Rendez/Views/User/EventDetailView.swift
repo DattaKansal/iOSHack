@@ -96,6 +96,7 @@ struct EventDetailView: View {
             .edgesIgnoringSafeArea(.top)
             .background(Color.primaryBackground)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
         }
     }
 }

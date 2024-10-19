@@ -3,9 +3,10 @@ struct EventCard: View {
     let event: Event
     
     var body: some View {
-        ZStack() {
+        ZStack {
             Image(event.imageName)
                 .resizable()
+                .frame(width: 300, height: 400)
                 .scaledToFill()
                 .aspectRatio(contentMode: .fill)
                 .clipped()
@@ -20,7 +21,7 @@ struct EventCard: View {
                     .frame(height: 400), // Adjust height based on how much of the image you want to darken
                     alignment: .bottom
                 )
-            HStack(alignment: .bottom) {
+            HStack {
                 VStack(alignment: .leading) {
                     Spacer()
                     Text(event.title)
@@ -36,13 +37,9 @@ struct EventCard: View {
                         .foregroundColor(.secondary)
 
                 }
+                .padding(20)
                 Spacer()
             }
-            .padding(20)
-
-
-            
-
         }
         .background(Color.secondBackground)
         .frame(width: 300, height: 400)

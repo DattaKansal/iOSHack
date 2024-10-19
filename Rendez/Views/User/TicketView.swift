@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct TicketView: View {
-    @StateObject private var viewModel = EventsViewModel()
+    @StateObject private var viewModel = UserViewModel()
+    @State var events: [Event]? = nil
     var body: some View {
         NavigationStack{
 //            NavigationLink(destination: UserHome(), isActive: $userHome) {}
@@ -26,7 +27,7 @@ struct TicketView: View {
                 ZStack {
                     ScrollView(.horizontal) {
                         HStack(spacing: 15) {
-                            ForEach(viewModel.events) { event in
+                            ForEach(events ?? []) { event in
                                 NavigationLink(destination: EventDetailView(event: event)) {
                                     EventCard(event: event)
                                         .shadow(color: Color.black.opacity(0.6), radius: 10, x: 0, y: 10)
@@ -44,6 +45,22 @@ struct TicketView: View {
                 Spacer()
             }
             .background(Color.primaryBackground)
+            .onAppear {
+                Task {
+                    await fetchEvents() // Fetch events asynchronously on appearance
+                }
+            }
+        }
+    }
+
+    // Function to fetch events
+    private func fetchEvents() async {
+        do {
+            let fetchedEvents = try await viewModel.getCurrentTickets()  // Fetch events from the ViewModel
+            events = fetchedEvents
+        } catch {
+            print("Failed to fetch events: \(error)")
+            events = []  // Handle errors or provide a fallback
         }
     }
 }

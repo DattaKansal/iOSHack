@@ -1,5 +1,5 @@
 //
-//  EventView.swift
+//  TicketView.swift
 //  Rendez
 //
 //  Created by Datta Kansal on 10/19/24.
@@ -7,24 +7,23 @@
 
 import SwiftUI
 
-struct EventView: View {
+struct YouView: View {
     @StateObject private var viewModel = UserViewModel()
     @State var events: [Event]? = nil
-    @State private var userHome: Bool = false
     var body: some View {
         NavigationStack{
-            NavigationLink(destination: UserHome(), isActive: $userHome) {}
+//            NavigationLink(destination: UserHome(), isActive: $userHome) {}
             VStack {
                 Spacer()
                 HStack {
-                    Text("Events")
+                    Text("Past Tickets")
                         .font(.system(size: 40))
                         .bold()
                         .foregroundColor(Color.white)
                     Spacer()
                 }
                 .padding(.leading, 25)
-                
+
                 ZStack {
                     ScrollView(.horizontal) {
                         HStack(spacing: 15) {
@@ -41,7 +40,7 @@ struct EventView: View {
                     .safeAreaPadding(.horizontal, 25)
                     .frame(height: 550)
                     .scrollIndicators(.hidden)
-                    
+
                 }
                 Spacer()
             }
@@ -57,7 +56,7 @@ struct EventView: View {
     // Function to fetch events
     private func fetchEvents() async {
         do {
-            let fetchedEvents = try await viewModel.getEvents()  // Fetch events from the ViewModel
+            let fetchedEvents = try await viewModel.getPastTickets()  // Fetch events from the ViewModel
             events = fetchedEvents
         } catch {
             print("Failed to fetch events: \(error)")
@@ -67,5 +66,6 @@ struct EventView: View {
 }
 
 #Preview {
-    EventView()
+    YouView()
 }
+
