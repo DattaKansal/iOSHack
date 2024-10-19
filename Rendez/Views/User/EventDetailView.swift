@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EventDetailView: View {
-    let event: Event
+    var event: Event
     @State private var tierCounts: [UUID: Int] = [:]
     
     var body: some View {

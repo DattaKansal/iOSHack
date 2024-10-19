@@ -13,6 +13,7 @@ import SwiftUI
 
 class UserViewModel: ObservableObject {
     @Published var user: User?
+    @Published var name: String = ""
     var userID: String = ""
     private let db = Firestore.firestore()
 
@@ -182,7 +183,20 @@ class UserViewModel: ObservableObject {
         if let user = Auth.auth().currentUser {
             // Access user properties
             self.userID = user.uid ?? "No uid"
-            print("User ID: \(user.uid)")  // User's unique ID
+            db.collection("USERS").document(userID).getDocument() { (document, error) in
+                if let error = error {
+                    print("Error fetching document: \(error)")
+                    return
+                }
+
+                guard let document = document, document.exists else {
+                    print("Document does not exist")
+                    return
+                }
+
+                let data = document.data()
+                self.name = data?["name"] as? String ?? ""
+            }
         } else {
             print("No user is signed in.")
             self.userID = "No user signed in"

@@ -12,6 +12,7 @@ struct LoginView: View {
     @State private var signup: Bool = false
     @State private var welcome: Bool = false
     @State private var userHome: Bool = false
+    @State private var hostHome: Bool = false
     @StateObject private var viewModel: LoginVM
 
     init(status: Status) {
@@ -23,6 +24,7 @@ struct LoginView: View {
             NavigationLink(destination: SignupView(status: status), isActive: $signup) {}
             NavigationLink(destination: WelcomeView(), isActive: $welcome) {}
             NavigationLink(destination: UserHome(), isActive: $userHome) {}
+            NavigationLink(destination: HostEventView(), isActive: $hostHome) {}
             VStack {
                 Spacer()
 
@@ -101,7 +103,11 @@ struct LoginView: View {
         }
         .onChange(of: viewModel.isLoggedIn) { _, newValue in
             if newValue {
-                self.userHome = true
+                if (self.status == .user) {
+                    self.userHome = true
+                } else {
+                    self.hostHome = true;
+                }
             }
         }
 

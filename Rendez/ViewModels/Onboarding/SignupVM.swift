@@ -18,6 +18,7 @@ extension SignupView {
         var status: Status
         var authError: String = ""
         var currentUser: User?
+        var isLoggedIn: Bool = false
 
         private var db = Firestore.firestore()
 
@@ -33,6 +34,7 @@ extension SignupView {
                 }
                 self.currentUser = user
                 self.addUserToCollection(user: user, status: status)
+                self.isLoggedIn = true;
             }
         }
 
