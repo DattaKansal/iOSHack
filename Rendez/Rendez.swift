@@ -16,6 +16,11 @@ extension Color {
     static let bg = Color(red: 51/255, green: 51/255, blue: 51/255)
 }
 
+enum Status {
+    case user
+    case host
+}
+
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
