@@ -20,17 +20,17 @@ struct EventDetailView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(height: UIScreen.main.bounds.height * 0.4)
                     .clipped()
-                
+
                 VStack(alignment: .leading, spacing: 15) {
                     // Title and organization name
                     VStack(alignment: .leading, spacing: 5) {
                         Text(event.title)
                             .font(.title)
                             .fontWeight(.bold)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.white)
                         Text(event.orgName)
                             .font(.subheadline)
-                            .foregroundColor(.primary)
+                            .foregroundColor(.secondary)
                     }
                     
                     // Description
@@ -44,15 +44,15 @@ struct EventDetailView: View {
                         Text(event.address)
                     }
                     .font(.subheadline)
-                    .foregroundColor(.primary)
-                    
+                    .foregroundColor(.secondary)
+
                     HStack {
                         Image(systemName: "calendar")
                         Text(event.date)
                     }
                     .font(.subheadline)
-                    .foregroundColor(.primary)
-                    
+                    .foregroundColor(.secondary)
+
                     // Tiers list
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Ticket Tiers")
@@ -75,7 +75,7 @@ struct EventDetailView: View {
                             .padding()
                             .background(Color.primary)
                             .foregroundColor(.white)
-                            .cornerRadius(10)
+                            .cornerRadius(30)
                     }
                     .padding(.top)
                     .disabled(tierCounts.values.reduce(0, +) == 0)
@@ -88,4 +88,10 @@ struct EventDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
+
+#Preview {
+    EventDetailView(event: Event(title: "Robot Speaker Event", description: "Learn and play with some robots", price: 0, orgName: "Robojackets", address: "SCC", date: "Nov 1 8-10 pm", imageName: "robot", tiers: [Tier(name: "Tier 1", price: 15, numTickets: 50), Tier(name: "Tier 2", price: 30, numTickets: 100)]))
+}
+
 
