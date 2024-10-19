@@ -45,7 +45,6 @@ extension SignupView {
             ]) { [weak self] error in
                 if let error = error {
                     self?.authError = error.localizedDescription
-                    print(self?.authError)
                 } else {
                     self?.status = status
                 }

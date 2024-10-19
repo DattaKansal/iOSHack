@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var email : String = ""
-    @State var password : String = ""
     @State var status : Status
     @State private var signup: Bool = false
     @State private var welcome: Bool = false
+    @State private var userHome: Bool = false
     @StateObject private var viewModel: LoginVM
 
     init(status: Status) {
@@ -23,6 +22,7 @@ struct LoginView: View {
         NavigationStack {
             NavigationLink(destination: SignupView(status: status), isActive: $signup) {}
             NavigationLink(destination: WelcomeView(), isActive: $welcome) {}
+            NavigationLink(destination: UserHome(), isActive: $userHome) {}
             VStack {
                 Spacer()
 
@@ -41,14 +41,14 @@ struct LoginView: View {
                     .foregroundColor(.white)
 
                 VStack(spacing: 20) {
-                    TextField("Email", text: $email)
+                    TextField("Email", text: $viewModel.email)
                         .padding()
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
                         .foregroundStyle(Color.primaryBackground)
                         .background(Color.secondary)
                         .cornerRadius(30)
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $viewModel.password)
                         .padding()
                         .autocapitalization(.none)
                         .foregroundStyle(Color.primaryBackground)
@@ -56,7 +56,7 @@ struct LoginView: View {
                         .cornerRadius(30)
 
                     Button(action: {
-                        // Action for Sign Up
+                        viewModel.signIn()
                     }) {
                         Text("Log In")
                             .frame(maxWidth: .infinity)
@@ -99,10 +99,15 @@ struct LoginView: View {
                 }
             }
         }
+        .onChange(of: viewModel.isLoggedIn) { _, newValue in
+            if newValue {
+                self.userHome = true
+            }
+        }
 
     }
 }
 
 #Preview {
-    LoginView(status: .host)
+    LoginView(status: .user)
 }

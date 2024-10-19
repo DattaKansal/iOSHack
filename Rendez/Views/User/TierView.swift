@@ -41,10 +41,9 @@ struct TierView: View {
                 }
             }
         }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
-        .background(count > 0 ? Color.secondBackground : Color.secondBackground.opacity(0.5))
-        .cornerRadius(8)
+        .padding(15)
+        .background(count > 0 ? Color.thirdBackground : Color.thirdBackground.opacity(0.5))
+        .cornerRadius(30)
         .overlay(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(count > 0 ? Color.primary : Color.clear, lineWidth: 2)
