@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import Stripe
 
 extension Color {
     static let primaryBackground = Color(red: 81/255, green: 59/255, blue: 69/255) // rose ebony
@@ -26,6 +27,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     FirebaseApp.configure()
+      StripeAPI.defaultPublishableKey = "pk_test_51Pz5wt00f98AeDQOj0sefb7VkmA4zwfNCs6F1uEN2FeGNl5kxEemElm7KdI5dccjR5fkuwNO5ThV6whHk6KJOueI00vhwjajzD"
+      
     return true
   }
 }
