@@ -9,11 +9,11 @@ import SwiftUI
 import FirebaseCore
 
 extension Color {
-    static let primaryBackground = Color("primaryBackground") // From asset catalog
-    static let secondaryBackground = Color("secondaryBackground")
-    static let primary = Color(red: 172/255, green: 216/255, blue: 170/255)
-    static let secondary = Color(red: 147/255, green: 133/255, blue: 129/255)
-    static let bg = Color(red: 51/255, green: 51/255, blue: 51/255)
+    static let primaryBackground = Color(red: 81/255, green: 59/255, blue: 69/255) // rose ebony
+    static let secondBackground = Color(red: 221/255, green: 151/255, blue: 135/255) // coral pink
+    static let primary = Color(red: 114/255, green: 189/255, blue: 163/255) // cambridge blue
+    static let secondary = Color(red: 231/255, green: 207/255, blue: 205/255) // pale dogwood
+    static let tertiary = Color(red: 2/255, green: 60/255, blue: 64/255) // midnight green
 }
 
 enum Status {

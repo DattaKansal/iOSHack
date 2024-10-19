@@ -34,20 +34,20 @@ struct SignUpView: View {
                 TextField("Name", text: $name)
                     .padding()
                     .autocapitalization(.none)
-                    .foregroundStyle(Color.bg)
+                    .foregroundStyle(Color.primaryBackground)
                     .background(Color.primary)
                     .cornerRadius(30)
                 TextField("Email", text: $email)
                     .padding()
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
-                    .foregroundStyle(Color.bg)
+                    .foregroundStyle(Color.primaryBackground)
                     .background(Color.primary)
                     .cornerRadius(30)
                 SecureField("Password", text: $password)
                     .padding()
                     .autocapitalization(.none)
-                    .foregroundStyle(Color.bg)
+                    .foregroundStyle(Color.primaryBackground)
                     .background(Color.primary)
                     .cornerRadius(30)
 
@@ -70,7 +70,7 @@ struct SignUpView: View {
 
             Spacer()
         }
-        .background(Color.bg)
+        .background(Color.primaryBackground)
     }
 }
 

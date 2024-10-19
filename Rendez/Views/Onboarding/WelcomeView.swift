@@ -84,7 +84,7 @@ struct WelcomeView: View {
 
                 Spacer()
             }
-            .background(Color.bg)
+            .background(Color.primaryBackground)
         }
     }
 }
