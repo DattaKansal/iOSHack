@@ -25,7 +25,6 @@
 		848909752CC33F190060D7E0 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 848909742CC33F190060D7E0 /* FirebaseInAppMessaging-Beta */; };
 		848909772CC33F190060D7E0 /* FirebaseInstallations in Frameworks */ = {isa = PBXBuildFile; productRef = 848909762CC33F190060D7E0 /* FirebaseInstallations */; };
 		848909792CC33F190060D7E0 /* FirebaseMLModelDownloader in Frameworks */ = {isa = PBXBuildFile; productRef = 848909782CC33F190060D7E0 /* FirebaseMLModelDownloader */; };
-		8489097B2CC33F450060D7E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489097A2CC33F450060D7E0 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +45,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8489097A2CC33F450060D7E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84A8CCD42CC3226000E501CC /* Rendez.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendez.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A8CCE42CC3226100E501CC /* RendezTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RendezTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A8CCEE2CC3226100E501CC /* RendezUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RendezUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,7 +114,6 @@
 		84A8CCCB2CC3226000E501CC = {
 			isa = PBXGroup;
 			children = (
-				8489097A2CC33F450060D7E0 /* AppDelegate.swift */,
 				84A8CCD62CC3226000E501CC /* Rendez */,
 				84A8CCE72CC3226100E501CC /* RendezTests */,
 				84A8CCF12CC3226100E501CC /* RendezUITests */,
@@ -299,7 +296,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8489097B2CC33F450060D7E0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,7 +455,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"iOSHack/Preview Content\"";
 				DEVELOPMENT_TEAM = 6UZT7756JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -488,7 +483,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"iOSHack/Preview Content\"";
 				DEVELOPMENT_TEAM = 6UZT7756JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 extension Color {
     static let primaryBackground = Color("primaryBackground") // From asset catalog
@@ -15,11 +16,20 @@ extension Color {
     static let bg = Color(red: 51/255, green: 51/255, blue: 51/255)
 }
 
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+    return true
+  }
+}
+
 @main
 struct Rendez: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WelcomeView()
         }
     }
 }
