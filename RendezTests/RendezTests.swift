@@ -6,16 +6,26 @@
 //
 
 import XCTest
-@testable import iOSHack
+import Firebase
+@testable import Rendez
 
 final class RendezTests: XCTestCase {
 
+    var db: Firestore!
+    var vm: UserViewModel!
+
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        // Initialize Firestore or mock if needed
+        db = Firestore.firestore() // Assuming a real Firestore instance
+        vm = UserViewModel()
     }
 
+    
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        db = nil
+        super.tearDown()
     }
 
     func testExample() throws {
@@ -32,5 +42,17 @@ final class RendezTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testGetEvents() async throws {
+        let userID = "testUser"
+        let events =  try await vm.getEvents(userID: userID)
+        print(events[0].address)
+//        print(events[1].title)
+        print(events.count)
+        // Assert
+        XCTAssertEqual(events.count, 2, "Expected 2 events, but got \(events.count)")
+    }
+    
+    
 
 }
