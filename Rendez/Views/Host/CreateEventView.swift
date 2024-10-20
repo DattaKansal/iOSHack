@@ -8,7 +8,7 @@
 import SwiftUI
 import PhotosUI
 
-struct HostEventView: View {
+struct CreateEventView: View {
 //
 //    @State private var tier1Price: Double = 50.0
 //    @State private var tier2Price: Double = 100.0
@@ -52,9 +52,14 @@ struct HostEventView: View {
                     
                     Button(action: {
                         // Action to Create Event
+
                         Task {
                             await viewModel.createEvent()
                         }
+
+                        viewModel.createEvent()
+                        HostHome()
+
                     }) {
                         Text("Create Event")
                             .font(.title2)
@@ -298,6 +303,7 @@ struct ImagePicker: View {
         }
     }
 }
+
 
 #Preview {
     HostEventView()

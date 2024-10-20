@@ -24,7 +24,7 @@ struct LoginView: View {
             NavigationLink(destination: SignupView(status: status), isActive: $signup) {}
             NavigationLink(destination: WelcomeView(), isActive: $welcome) {}
             NavigationLink(destination: UserHome(), isActive: $userHome) {}
-            NavigationLink(destination: HostEventView(), isActive: $hostHome) {}
+            NavigationLink(destination: HostHome(), isActive: $hostHome) {}
             VStack {
                 Spacer()
 

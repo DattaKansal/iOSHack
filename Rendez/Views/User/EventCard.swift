@@ -36,7 +36,6 @@ struct EventCard: View {
                     let price = event.price == 0 ? "Free" : "$" + String(format: "%.2f", event.price)
                     Label("\(price)", systemImage: "dollarsign.circle")
                         .foregroundColor(.secondary)
-
                 }
                 .padding(20)
                 Spacer()
