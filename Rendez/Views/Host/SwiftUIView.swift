@@ -9,26 +9,17 @@ import SwiftUI
 import PhotosUI
 
 struct HostEventView: View {
-    @State private var eventName: String = ""
-    @State private var eventDescription: String = ""
-    @State private var eventDate = Date()
-    @State private var location: String = ""
-    @State private var totalTickets: Int = 100
-    @State private var pricePerTicket: Double = 50.0
-    @State private var isWaitlistEnabled: Bool = false
-    @State private var waitlistOpenAfterSoldOut: Int = 10
-    @State private var maxTicketsPerPerson: Int = 5
-    @State private var tieredPricing: Bool = false
-    @State private var tier1Price: Double = 50.0
-    @State private var tier2Price: Double = 100.0
-    @State private var tier1Tickets: Int = 50
-    @State private var tier2Tickets: Int = 50
+//
+//    @State private var tier1Price: Double = 50.0
+//    @State private var tier2Price: Double = 100.0
+//    @State private var tier1Tickets: Int = 50
+//    @State private var tier2Tickets: Int = 50
     
     @State private var numberOfTiers: Int = 1
-    @State private var tiers: [Tier] = [Tier(name: "", price: 50.0, numTickets: 50)]
     @State private var totalTicketsInput: String = "100"
-    @State private var selectedImage: UIImage? = nil
     @State private var showImagePicker = false
+    
+    @StateObject private var viewModel = HostEventViewModel()
     
     var body: some View {
         NavigationView {
@@ -51,6 +42,7 @@ struct HostEventView: View {
                     
                     Button(action: {
                         // Action to Create Event
+                        viewModel.createEvent()
                     }) {
                         Text("Create Event")
                             .font(.title2)
@@ -78,19 +70,19 @@ struct HostEventView: View {
                 .foregroundColor(.purple)
             
             VStack(spacing: 10) {
-                TextField("Event Name", text: $eventName)
+                TextField("Event Name", text: $viewModel.eventName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 
-                TextField("Location", text: $location)
+                TextField("Location", text: $viewModel.location)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 
-                DatePicker("Event Date", selection: $eventDate, displayedComponents: [.date, .hourAndMinute])
+                DatePicker("Event Date", selection: $viewModel.eventDate, displayedComponents: [.date, .hourAndMinute])
                     .padding(.horizontal)
                     .datePickerStyle(GraphicalDatePickerStyle())
                 
-                TextField("Description", text: $eventDescription)
+                TextField("Description", text: $viewModel.eventDescription)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(height: 100)
                     .padding(.horizontal)
@@ -111,7 +103,7 @@ struct HostEventView: View {
             Button(action: {
                 showImagePicker = true
             }) {
-                if let selectedImage = selectedImage {
+                if let selectedImage = viewModel.selectedImage {
                     Image(uiImage: selectedImage)
                         .resizable()
                         .scaledToFit()
@@ -146,7 +138,7 @@ struct HostEventView: View {
                 .multilineTextAlignment(.leading)
                 
                 TextField("Total Tickets", text: $totalTicketsInput, onCommit: {
-                    updateTotalTickets()
+                    viewModel.updateTotalTickets()
                 })
                 .keyboardType(.numberPad)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -155,17 +147,17 @@ struct HostEventView: View {
                 HStack {
                     Text("Price Per Ticket:")
                     Spacer()
-                    Text("$\(pricePerTicket, specifier: "%.2f")")
+                    Text("$\(viewModel.pricePerTicket, specifier: "%.2f")")
                 }
                 .padding(.horizontal)
-                Slider(value: $pricePerTicket, in: 0...500, step: 5)
+                Slider(value: $viewModel.pricePerTicket, in: 0...500, step: 5)
                     .accentColor(.blue)
                     .padding(.horizontal)
                 
-                Toggle("Enable Tiered Pricing", isOn: $tieredPricing)
+                Toggle("Enable Tiered Pricing", isOn: $viewModel.tieredPricing)
                     .padding(.horizontal)
                 
-                if tieredPricing {
+                if viewModel.tieredPricing {
                     tieredTicketingSection
                 }
             }
@@ -175,13 +167,13 @@ struct HostEventView: View {
         }
     }
     
-    private func updateTotalTickets() {
-            if let value = Int(totalTicketsInput) {
-                totalTickets = value
-            } else {
-                totalTickets = 0
-            }
-        }
+//    private func updateTotalTickets() {
+//            if let value = Int(totalTicketsInput) {
+//                viewModel.totalTickets = value
+//            } else {
+//                viewModel.totalTickets = 0
+//            }
+//        }
 
     var tieredTicketingSection: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -224,21 +216,21 @@ struct HostEventView: View {
     }
 
     func adjustTiers() {
-        if numberOfTiers > tiers.count {
-            let additionalTiers = numberOfTiers - tiers.count
-            tiers.append(contentsOf: Array(repeating: Tier(name: "", price: 50.0, numTickets: 50), count: additionalTiers))
-        } else if numberOfTiers < tiers.count {
-            tiers.removeLast(tiers.count - numberOfTiers)
+        if numberOfTiers > viewModel.tiers.count {
+            let additionalTiers = numberOfTiers - viewModel.tiers.count
+            viewModel.tiers.append(contentsOf: Array(repeating: Tier(name: "", price: 50.0, numTickets: 50), count: additionalTiers))
+        } else if numberOfTiers < viewModel.tiers.count {
+            viewModel.tiers.removeLast(viewModel.tiers.count - numberOfTiers)
         }
     }
 
     var waitlistSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Toggle("Enable Waitlist", isOn: $isWaitlistEnabled)
+            Toggle("Enable Waitlist", isOn: $viewModel.isWaitlistEnabled)
                 .padding(.horizontal)
             
-            if isWaitlistEnabled {
-                Stepper("Waitlist Opens After \(waitlistOpenAfterSoldOut) Minutes", value: $waitlistOpenAfterSoldOut, in: 1...120)
+            if viewModel.isWaitlistEnabled {
+                Stepper("Waitlist Opens After \(viewModel.waitlistOpenAfterSoldOut) Minutes", value: $viewModel.waitlistOpenAfterSoldOut, in: 1...120)
                     .padding(.horizontal)
             }
         }
@@ -255,14 +247,14 @@ struct HostEventView: View {
                 .foregroundColor(.green)
             
             HStack {
-                Text("Total Tickets: \(totalTickets)")
+                Text("Total Tickets: \(viewModel.totalTickets)")
                 Spacer()
-                Text("Price Per Ticket: $\(pricePerTicket, specifier: "%.2f")")
+                Text("Price Per Ticket: $\(viewModel.pricePerTicket, specifier: "%.2f")")
             }
             .padding(.horizontal)
             
-            if tieredPricing {
-                ForEach(tiers) { tier in
+            if viewModel.tieredPricing {
+                ForEach(viewModel.tiers) { tier in
                     HStack {
                         Text("\(tier.name): $\(tier.price, specifier: "%.2f")")
                         Spacer()
@@ -285,7 +277,7 @@ struct HostEventView: View {
                 .fontWeight(.bold)
                 .foregroundColor(.red)
             
-            Stepper("Max Tickets Per Person: \(maxTicketsPerPerson)", value: $maxTicketsPerPerson, in: 1...15)
+            Stepper("Max Tickets Per Person: \(viewModel.maxTicketsPerPerson)", value: $viewModel.maxTicketsPerPerson, in: 1...15)
                 .padding(.horizontal)
         }
         .padding()
