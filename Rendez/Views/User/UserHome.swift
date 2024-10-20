@@ -32,10 +32,9 @@ struct UserHome: View {
                 }
                 .toolbarBackground(Color.secondary, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
-
+                .toolbarBackgroundVisibility(.visible, for: .tabBar)
         }
         .tint(Color.primaryBackground)
-
     }
 }
 

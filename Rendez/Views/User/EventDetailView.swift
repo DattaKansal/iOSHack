@@ -4,13 +4,8 @@
 //
 //  Created by Datta Kansal on 10/18/24.
 //
-import SwiftUI
 
-struct CheckoutItem: Codable {
-    let name: String
-    let amount: Int
-    let quantity: Int
-}
+import SwiftUI
 
 struct EventDetailView: View {
     let event: Event
@@ -18,16 +13,24 @@ struct EventDetailView: View {
     @State private var isActive: Bool = false
     @State private var clientSecret: String?
     @State private var errorMessage: String?
+    @State private var checkoutItems: [CheckoutItem] = []  // New state variable
 
     private func startCheckout() {
         let selectedTiers = event.tiers.compactMap { tier -> CheckoutItem? in
-            guard let tier = tier, let count = tierCounts[tier.id], count > 0 else { return nil }
+            guard let count = tierCounts[tier.id], count > 0 else { return nil }
             return CheckoutItem(
                 name: tier.name,
-                amount: Int(tier.price * 100),
+                price: tier.price,
                 quantity: count
             )
         }
+        
+        guard !selectedTiers.isEmpty else {
+            self.errorMessage = "Please select at least one ticket"
+            return
+        }
+        
+        self.checkoutItems = selectedTiers  // Store the created CheckoutItems
         
         guard let url = URL(string: "https://special-coffee-turkey.glitch.me/create-payment-intent") else {
             self.errorMessage = "Invalid URL"
@@ -87,6 +90,7 @@ struct EventDetailView: View {
                     print("No data received")
                     return
                 }
+                
                 
                 do {
                     let responseString = String(data: data, encoding: .utf8)
@@ -215,11 +219,19 @@ struct EventDetailView: View {
                     .onChange(of: clientSecret) { newValue in
                         print("clientSecret changed to \(newValue ?? "nil")")
                     }
+
+                    
+                    NavigationLink(
+                        destination: CheckoutView(clientSecret: clientSecret ?? "", checkoutItems: checkoutItems),
+                        isActive: $isActive,
+                        label: { EmptyView() }
+                    )
+                    .hidden()
                 }
                 .ignoresSafeArea()
                 .background(Color.primaryBackground)
                 .padding(10)
-
+                .navigationBarTitleDisplayMode(.inline)
             }
             .scrollIndicators(.hidden)
             .background(Color.primaryBackground)
@@ -229,11 +241,3 @@ struct EventDetailView: View {
         .background(Color.primaryBackground)
     }
 }
-
-
-//#Preview {
-//    EventDetailView(event: Event(title: "Robot Speaker Event", description: "Learn and play with some robots", price: 0, orgName: "Robojackets", address: "SCC", date: "Nov 1 8-10 pm", imageName: "robot", tiers: [Tier(name: "Tier 1", price: 15, numTickets: 50), Tier(name: "Tier 2", price: 30, numTickets: 100)]))
-//}
-//
-//
-//

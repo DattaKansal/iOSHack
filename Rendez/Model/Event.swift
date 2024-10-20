@@ -20,7 +20,7 @@ struct Event: Identifiable {
     let endDate: String
     let imageName: String
     let tiers: [Tier?]
-   let docID: String
+    let docID: String
 
 // let numAttendees: Int
 
