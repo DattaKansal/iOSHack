@@ -27,6 +27,7 @@ class HostViewModel: ObservableObject {
     }
     
     func createHostEvent(event: Event) {
+        print("called")
         guard let hostID = host?.id else { return }
         
         let eventDict: [String: Any] = [

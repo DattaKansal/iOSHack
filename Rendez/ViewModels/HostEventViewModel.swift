@@ -11,7 +11,7 @@ class HostEventViewModel: ObservableObject {
     @Published var eventName: String = ""
     @Published var eventDescription: String = ""
     @Published var eventDate = Date()
-    @Published var location: String = ""
+    @Published var loc: String = ""
     @Published var totalTickets: Int = 100
     @Published var pricePerTicket: Double = 50.0
     @Published var isWaitlistEnabled: Bool = false
@@ -21,7 +21,8 @@ class HostEventViewModel: ObservableObject {
     @Published var tiers: [Tier] = [Tier(name: "", price: 50.0, numTickets: 50)]
     @Published var selectedImage: UIImage? = nil
     @Published var hostModel = HostViewModel()
-    
+    @Published var docID: String = ""
+
     var totalTicketsInput: String = "100"
     
     func createEvent() {
@@ -32,10 +33,10 @@ class HostEventViewModel: ObservableObject {
             description: eventDescription,
             price: pricePerTicket,
             orgName: "",
-            address: location,
+            address: loc,
             date: formatter.string(from: eventDate),
             imageName: "",
-            tiers: tiers,
+            tiers: tiers, docID: docID,
             totalTickets: totalTickets,
             isWaitlistEnabled: isWaitlistEnabled,
             waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut,

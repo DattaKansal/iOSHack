@@ -74,7 +74,7 @@ struct HostEventView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 
-                TextField("Location", text: $viewModel.location)
+                TextField("Location", text: $viewModel.loc)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 

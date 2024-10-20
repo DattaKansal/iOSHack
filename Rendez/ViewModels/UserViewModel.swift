@@ -47,6 +47,11 @@ class UserViewModel: ObservableObject {
             let orgName = docData["orgName"] as? String ?? ""
             let imageName = docData["imageName"] as? String ?? ""
             let endDateTimeString = docData["end_date_time"] as? String ?? ""
+            let totalTickets = docData["totalTickets"] as? Int ?? 0
+            let isWaitlistEnabled = docData["isWaitlistEnabled"] as? Bool ?? false
+            let waitlistOpenAfterSoldOut = docData["waitlistOpenAfterSoldOut"] as? Int ?? 0
+            let maxTicketsPerPerson = docData["maxTicketsPerPerson"] as? Int ?? 0
+            let tieredPricing = docData["tieredPricing"] as? Bool ?? false
             guard !attendees.contains(userID) else {
                 return nil
             }
@@ -63,10 +68,9 @@ class UserViewModel: ObservableObject {
             guard startDateTime < currentDate else {
                 return nil
             }
-            return Event(
-                title: title, description: description, price: price,
+            return Event(title: title, description: description, price: price,
                 orgName: orgName, address: address, date: startDateTimeString,
-                imageName: imageName, tiers: [], docID: docID)
+                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson, tieredPricing: tieredPricing)
         }
         return events
     }
@@ -101,6 +105,11 @@ class UserViewModel: ObservableObject {
             let orgName = docData["orgName"] as? String ?? ""
             let imageName = docData["imageName"] as? String ?? ""
             let endDateTimeString = docData["end_date_time"] as? String ?? ""
+            let totalTickets = docData["totalTickets"] as? Int ?? 0
+            let isWaitlistEnabled = docData["isWaitlistEnabled"] as? Bool ?? false
+            let waitlistOpenAfterSoldOut = docData["waitlistOpenAfterSoldOut"] as? Int ?? 0
+            let maxTicketsPerPerson = docData["maxTicketsPerPerson"] as? Int ?? 0
+            let tieredPricing = docData["tieredPricing"] as? Bool ?? false
             guard attendees.contains(userID) else {
                 return nil
             }
@@ -117,10 +126,9 @@ class UserViewModel: ObservableObject {
             guard startDateTime <= currentDate else {
                 return nil
             }
-            return Event(
-                title: title, description: description, price: price,
+            return Event(title: title, description: description, price: price,
                 orgName: orgName, address: address, date: startDateTimeString,
-                imageName: imageName, tiers: [], docID: docID)
+                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson, tieredPricing: tieredPricing)
         }
         return events
     }
@@ -155,6 +163,11 @@ class UserViewModel: ObservableObject {
             let orgName = docData["orgName"] as? String ?? ""
             let imageName = docData["imageName"] as? String ?? ""
             let endDateTimeString = docData["end_date_time"] as? String ?? ""
+            let totalTickets = docData["totalTickets"] as? Int ?? 0
+            let isWaitlistEnabled = docData["isWaitlistEnabled"] as? Bool ?? false
+            let waitlistOpenAfterSoldOut = docData["waitlistOpenAfterSoldOut"] as? Int ?? 0
+            let maxTicketsPerPerson = docData["maxTicketsPerPerson"] as? Int ?? 0
+            let tieredPricing = docData["tieredPricing"] as? Bool ?? false
             guard attendees.contains(userID) else {
                 return nil
             }
@@ -173,7 +186,7 @@ class UserViewModel: ObservableObject {
             }
             return Event(title: title, description: description, price: price,
                 orgName: orgName, address: address, date: startDateTimeString,
-                         imageName: imageName, tiers: [], docID: docID)
+                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson, tieredPricing: tieredPricing)
         }
         return events
     }

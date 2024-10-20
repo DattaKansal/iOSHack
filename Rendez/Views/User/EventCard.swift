@@ -47,7 +47,3 @@ struct EventCard: View {
         .cornerRadius(20)
     }
 }
-
-#Preview {
-    EventCard(event: Event(title: "Robot Speaker Event", description: "Learn and play with some robots", price: 0, orgName: "Robojackets", address: "SCC", date: "Nov 1 8-10 pm", imageName: "robot", tiers: [Tier(name: "Tier 1", price: 15, numTickets: 50), Tier(name: "Tier 2", price: 30, numTickets: 100)], docID: "robot"))
-}
