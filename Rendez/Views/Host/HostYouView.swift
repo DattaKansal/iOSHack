@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HostYouView: View {
-    @StateObject private var viewModel = HostViewModel()
+    @StateObject private var viewModel = HostEventViewModel()
     @State var events: [Event]? = nil
     @State private var userSettings: Bool = false
     @State private var isActive: Bool = false

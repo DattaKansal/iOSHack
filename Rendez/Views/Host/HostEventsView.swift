@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HostEventsView: View {
-    @StateObject private var viewModel = HostViewModel()
+    @StateObject private var viewModel = HostEventViewModel()
     @State var events: [Event]? = nil
     @State private var hostHome: Bool = false
     @State private var showAddEventView: Bool = false // To trigger navigation to Add Event view

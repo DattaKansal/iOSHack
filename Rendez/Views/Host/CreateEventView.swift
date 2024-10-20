@@ -57,7 +57,6 @@ struct CreateEventView: View {
                             await viewModel.createEvent()
                         }
 
-                        viewModel.createEvent()
                         HostHome()
 
                     }) {
@@ -66,12 +65,11 @@ struct CreateEventView: View {
                             .fontWeight(.semibold)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.secondary)
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
+                            .background(Color.primary)
+                            .foregroundColor(.black)
+                            .cornerRadius(25)
                             .shadow(radius: 8)
                     }
-                    .padding(.horizontal)
                 }
                 .padding(25)
             }
@@ -306,6 +304,6 @@ struct ImagePicker: View {
 
 
 #Preview {
-    HostEventView()
+    CreateEventView()
 }
 

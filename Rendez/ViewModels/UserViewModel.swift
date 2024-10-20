@@ -70,7 +70,7 @@ class UserViewModel: ObservableObject {
             }
             return Event(title: title, description: description, price: price,
                 orgName: orgName, address: address, date: startDateTimeString,
-                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson, tieredPricing: tieredPricing)
+                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson)
         }
         return events
     }
@@ -128,7 +128,7 @@ class UserViewModel: ObservableObject {
             }
             return Event(title: title, description: description, price: price,
                 orgName: orgName, address: address, date: startDateTimeString,
-                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson, tieredPricing: tieredPricing)
+                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson)
         }
         return events
     }
@@ -186,7 +186,7 @@ class UserViewModel: ObservableObject {
             }
             return Event(title: title, description: description, price: price,
                 orgName: orgName, address: address, date: startDateTimeString,
-                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson, tieredPricing: tieredPricing)
+                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson)
         }
         return events
     }
