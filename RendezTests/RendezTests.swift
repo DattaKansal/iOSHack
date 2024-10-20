@@ -45,12 +45,13 @@ final class RendezTests: XCTestCase {
     
     func testGetEvents() async throws {
         let userID = "testUser"
-        let events =  try await vm.getEvents(userID: userID)
-        print(events[0].address)
-//        print(events[1].title)
+        let events =  try await vm.getEvents()
+        print(events[0].orgName)
+        print(events[0].tiers.count)
+        print("Hi this is \(events[0].tiers[0].numTickets)")
         print(events.count)
         // Assert
-        XCTAssertEqual(events.count, 2, "Expected 2 events, but got \(events.count)")
+        XCTAssertEqual(events.count, 3, "Expected 3 events, but got \(events.count)")
     }
     
     

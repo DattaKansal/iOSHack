@@ -4,13 +4,8 @@
 //
 //  Created by Datta Kansal on 10/18/24.
 //
-import SwiftUI
 
-struct CheckoutItem: Codable {
-    let name: String
-    let amount: Int
-    let quantity: Int
-}
+import SwiftUI
 
 struct EventDetailView: View {
     let event: Event
@@ -18,16 +13,24 @@ struct EventDetailView: View {
     @State private var isActive: Bool = false
     @State private var clientSecret: String?
     @State private var errorMessage: String?
+    @State private var checkoutItems: [CheckoutItem] = []  // New state variable
     
     private func startCheckout() {
         let selectedTiers = event.tiers.compactMap { tier -> CheckoutItem? in
-            guard let tier = tier, let count = tierCounts[tier.id], count > 0 else { return nil }
+            guard let count = tierCounts[tier.id], count > 0 else { return nil }
             return CheckoutItem(
                 name: tier.name,
-                amount: Int(tier.price * 100),
+                price: tier.price,
                 quantity: count
             )
         }
+        
+        guard !selectedTiers.isEmpty else {
+            self.errorMessage = "Please select at least one ticket"
+            return
+        }
+        
+        self.checkoutItems = selectedTiers  // Store the created CheckoutItems
         
         guard let url = URL(string: "https://special-coffee-turkey.glitch.me/create-payment-intent") else {
             self.errorMessage = "Invalid URL"
@@ -88,6 +91,7 @@ struct EventDetailView: View {
                     return
                 }
                 
+                
                 do {
                     let responseString = String(data: data, encoding: .utf8)
                     print("Response data: \(responseString ?? "")")
@@ -120,7 +124,6 @@ struct EventDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                // Top image
                 Image(event.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -164,7 +167,7 @@ struct EventDetailView: View {
                         Text("Ticket Tiers")
                             .font(.headline)
                             .foregroundColor(.secondary)
-//                        print(event.tiers.count)
+                        //                        print(event.tiers.count)
                         ForEach(event.tiers.compactMap { $0 }) { tier in
                             TierView(tier: tier, count: tierCounts[tier.id] ?? 0) { newCount in
                                 tierCounts[tier.id] = newCount
@@ -193,7 +196,7 @@ struct EventDetailView: View {
                     }
                     
                     NavigationLink(
-                        destination: CheckoutView(clientSecret: clientSecret ?? ""),
+                        destination: CheckoutView(clientSecret: clientSecret ?? "", checkoutItems: checkoutItems),
                         isActive: $isActive,
                         label: { EmptyView() }
                     )
@@ -202,21 +205,7 @@ struct EventDetailView: View {
                 .edgesIgnoringSafeArea(.top)
                 .background(Color.primaryBackground)
                 .navigationBarTitleDisplayMode(.inline)
-                .onChange(of: isActive) { newValue in
-                    print("isActive changed to \(newValue)")
-                }
-                .onChange(of: clientSecret) { newValue in
-                    print("clientSecret changed to \(newValue ?? "nil")")
-                }
             }
         }
     }
 }
-
-
-//#Preview {
-//    EventDetailView(event: Event(title: "Robot Speaker Event", description: "Learn and play with some robots", price: 0, orgName: "Robojackets", address: "SCC", date: "Nov 1 8-10 pm", imageName: "robot", tiers: [Tier(name: "Tier 1", price: 15, numTickets: 50), Tier(name: "Tier 2", price: 30, numTickets: 100)]))
-//}
-//
-//
-//
