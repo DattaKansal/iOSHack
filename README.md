@@ -8,8 +8,8 @@ SwiftUI, Firebase, Node.js
 APIs: Stripe, CoreImage, Glitch
 
 # App Info
-Rendez is an app that allows hosts to create events they're hosting. 
-A host can see the events they're hosting, the attendees for each event, and the money 🤑 they've made. Hosts can also scan events their users into the events they're hosting.
+Rendez is an app that allows hosts to create events they're hosting. <br>
+A host can see the events they're hosting, the attendees for each event, and the money 🤑 they've made. Hosts can also scan events their users into the events they're hosting. <br>
 A user can find events they could be interesting to them, they can purchase events in app thru Stripe and see the tickets of various events.
 
 # Additional features coming
