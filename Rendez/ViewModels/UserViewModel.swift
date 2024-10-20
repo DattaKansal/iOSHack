@@ -77,9 +77,9 @@ class UserViewModel: ObservableObject {
                 let price = tierData["price"] as? Double ?? 0.0
                 return Tier(name: name, price: price, numTickets: numTickets)
             }
-            return Event(title: title, description: description, price: price,
+            events.append(Event(title: title, description: description, price: price,
                          orgName: orgName, address: address, startDate: startDateTimeString, endDate: endDateTimeString,
-                         imageName: imageName, tiers: tiers, docID: docID, isWaitlistEnabled: isWaitlistEnabled, maxTicketsPerPerson: maxTicketsPerPerson)
+                         imageName: imageName, tiers: tiers, docID: docID, isWaitlistEnabled: isWaitlistEnabled, maxTicketsPerPerson: maxTicketsPerPerson))
         }
 
         return events
