@@ -3,7 +3,7 @@ Project for iOS Club Fall 2024 Hackathon
 
 Developers: Datta Kansal, Akshat Shenoi
 
-**Tech Stack** SwiftUI, Firebase, Node.js <br>
+**Tech Stack**: SwiftUI, Firebase, Node.js <br>
 **APIs**: Stripe, CoreImage, Glitch
 
 # App Info
