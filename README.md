@@ -3,9 +3,8 @@ Project for iOS Club Fall 2024 Hackathon
 
 Developers: Datta Kansal, Akshat Shenoi
 
-#Tech Stack
-SwiftUI, Firebase, Node.js
-APIs: Stripe, CoreImage, Glitch
+**Tech Stack** SwiftUI, Firebase, Node.js <br>
+**APIs**: Stripe, CoreImage, Glitch
 
 # App Info
 Rendez is an app that allows hosts to create events they're hosting. <br>
