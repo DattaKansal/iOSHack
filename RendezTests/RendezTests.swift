@@ -48,7 +48,7 @@ final class RendezTests: XCTestCase {
         let events =  try await vm.getEvents()
         print(events[0].orgName)
         print(events[0].tiers.count)
-        print("Hi this is \(events[0].tiers[0].numTickets)")
+//        print("Hi this is \(events[0].tiers[0].numTickets)")
         print(events.count)
         // Assert
         XCTAssertEqual(events.count, 3, "Expected 3 events, but got \(events.count)")

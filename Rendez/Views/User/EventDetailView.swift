@@ -173,8 +173,8 @@ struct EventDetailView: View {
                             Text("Ticket Tiers")
                                 .font(.headline)
                                 .foregroundColor(.secondary)
-                            //                        print(event.tiers.count)
-                            ForEach(event.tiers.compactMap { $0 }) { tier in
+                            
+                            ForEach(event.tiers) { tier in
                                 TierView(tier: tier, count: tierCounts[tier.id] ?? 0) { newCount in
                                     tierCounts[tier.id] = newCount
                                 }
