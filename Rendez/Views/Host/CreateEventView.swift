@@ -20,10 +20,22 @@ struct HostEventView: View {
     @State private var showImagePicker = false
     
     @StateObject private var viewModel = HostEventViewModel()
-    
+
+    @State var tierCount = 1
+
     var body: some View {
         NavigationView {
             ScrollView {
+
+                HStack {
+                    Text("Create Event")
+                        .font(.system(size: 40))
+                        .bold()
+                        .foregroundColor(Color.white)
+                    Spacer()
+                }
+                .padding(.leading, 25)
+
                 VStack(spacing: 20) {
 
                     eventDetailsSection
@@ -34,31 +46,31 @@ struct HostEventView: View {
 
                     waitlistSection
 
-                    paymentOverviewSection
-
                     restrictionsSection
                     
                     Spacer()
                     
                     Button(action: {
                         // Action to Create Event
-                        viewModel.createEvent()
+                        Task {
+                            await viewModel.createEvent()
+                        }
                     }) {
                         Text("Create Event")
                             .font(.title2)
                             .fontWeight(.semibold)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                            .background(Color.secondary)
                             .foregroundColor(.white)
                             .cornerRadius(12)
                             .shadow(radius: 8)
                     }
                     .padding(.horizontal)
                 }
-                .padding()
+                .padding(25)
             }
-            .navigationTitle("Host Event")
+            .background(Color.primaryBackground)
         }
     }
 
@@ -67,28 +79,37 @@ struct HostEventView: View {
             Text("Event Details")
                 .font(.title3)
                 .fontWeight(.bold)
-                .foregroundColor(.purple)
-            
+                .foregroundColor(Color.secondary)
+
             VStack(spacing: 10) {
                 TextField("Event Name", text: $viewModel.eventName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-                
+                    .padding()
+                    .foregroundStyle(Color.black)
+                    .background(Color.secondary)
+                    .cornerRadius(30)
+
                 TextField("Location", text: $viewModel.loc)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-                
-                DatePicker("Event Date", selection: $viewModel.eventDate, displayedComponents: [.date, .hourAndMinute])
-                    .padding(.horizontal)
-                    .datePickerStyle(GraphicalDatePickerStyle())
-                
+                    .padding()
+                    .foregroundStyle(Color.black)
+                    .background(Color.secondary)
+                    .cornerRadius(30)
+                DatePicker("Start-Date", selection: $viewModel.startDate, displayedComponents: [.date, .hourAndMinute])
+                    .tint(Color.primary)
+                    .padding(.leading, 5)
+
+                DatePicker("End-Date", selection: $viewModel.endDate, displayedComponents: [.date, .hourAndMinute])
+                    .tint(Color.primary)
+                    .padding(.leading, 5)
+
                 TextField("Description", text: $viewModel.eventDescription)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(height: 100)
-                    .padding(.horizontal)
+                    .multilineTextAlignment(.leading)
+                    .padding()
+                    .foregroundStyle(Color.black)
+                    .background(Color.secondary)
+                    .cornerRadius(30)
             }
             .padding()
-            .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+            .background(RoundedRectangle(cornerRadius: 25).fill(Color.thirdBackground))
             .shadow(radius: 5)
         }
     }
@@ -98,28 +119,45 @@ struct HostEventView: View {
             Text("Event Image")
                 .font(.title3)
                 .fontWeight(.bold)
-                .foregroundColor(.orange)
-
-            Button(action: {
-                showImagePicker = true
-            }) {
+                .foregroundColor(.secondary)
+            VStack {
                 if let selectedImage = viewModel.selectedImage {
                     Image(uiImage: selectedImage)
                         .resizable()
                         .scaledToFit()
                         .frame(height: 200)
-                        .cornerRadius(12)
+                        .cornerRadius(25)
                 } else {
-                    Text("Select An Image")
+                    Text("No Image Selected")
                         .foregroundColor(.gray)
                         .frame(height: 200)
                         .frame(maxWidth: .infinity)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(12)
+                        .background(Color.secondary)
+                        .cornerRadius(25)
                 }
+                PhotosPicker("Add Image", selection: $viewModel.imageItem, matching: .images)
+                    .tint(Color.black)
+                    .onChange(of: viewModel.imageItem) { newItem in
+                        Task {
+                            if let newItem = newItem {
+                                do {
+                                    // Try to load the image data
+                                    if let data = try await newItem.loadTransferable(type: Data.self),
+                                       let uiImage = UIImage(data: data) {
+                                        // Set the selected image
+                                        viewModel.selectedImage = uiImage
+                                    }
+                                } catch {
+                                    print("Error loading image: \(error)")
+                                }
+                            }
+                        }
+                    }
             }
-            .padding(.horizontal)
-            .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+            .frame(maxWidth: .infinity)  // Make sure it spans the available width
+            .frame(height: 225)
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 25).fill(Color.thirdBackground))
             .shadow(radius: 5)
         }
     }
@@ -129,19 +167,25 @@ struct HostEventView: View {
             Text("Ticketing")
                 .font(.title3)
                 .fontWeight(.bold)
-                .foregroundColor(.blue)
-            
+                .foregroundColor(Color.secondary)
+
             VStack(spacing: 10) {
-//                Stepper("Total Tickets: \(totalTickets)", value: $totalTickets, in: 0...1000)
-//                    .padding(.horizontal)
-                Text("Total Tickets")
-                .multilineTextAlignment(.leading)
-                
-                TextField("Total Tickets", text: $totalTicketsInput, onCommit: {
-                    viewModel.updateTotalTickets()
-                })
-                .keyboardType(.numberPad)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                Button(action: {
+                    tierCount = tierCount + 1
+                }) {
+                    Label("Add Ticket Tier", systemImage: "plus.circle")
+                        .tint(Color.primary)
+                }
+                VStack {
+                    ForEach(0..<tierCount, id: \.self) {index in
+                        TextField("Total Tickets", text: $totalTicketsInput, onCommit: {
+                            viewModel.updateTotalTickets()
+                        })
+                        .keyboardType(.numberPad)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                }
+
                 
                 Spacer()
                 HStack {
@@ -151,18 +195,11 @@ struct HostEventView: View {
                 }
                 .padding(.horizontal)
                 Slider(value: $viewModel.pricePerTicket, in: 0...500, step: 5)
-                    .accentColor(.blue)
+                    .accentColor(Color.primary)
                     .padding(.horizontal)
-                
-                Toggle("Enable Tiered Pricing", isOn: $viewModel.tieredPricing)
-                    .padding(.horizontal)
-                
-                if viewModel.tieredPricing {
-                    tieredTicketingSection
-                }
             }
             .padding()
-            .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+            .background(RoundedRectangle(cornerRadius: 25).fill(Color.thirdBackground))
             .shadow(radius: 5)
         }
     }
@@ -175,97 +212,24 @@ struct HostEventView: View {
 //            }
 //        }
 
-    var tieredTicketingSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Tier Ticketing")
-                .font(.title3)
-                .fontWeight(.bold)
-                .foregroundColor(.blue)
-            
-            Stepper("Number of Tiers: \(numberOfTiers)", value: $numberOfTiers, in: 1...5, onEditingChanged: { _ in
-                adjustTiers()
-            })
-            .padding(.horizontal)
-            
-//            ForEach(tiers.indices, id: \.self) { index in
-//                let tierBinding = $tiers[index]
-//                
-//                VStack(spacing: 10) {
-//                    TextField("Tier \(index + 1) Name", text: tierBinding.name)
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-//                        .padding(.horizontal)
-//                    
-//                    HStack {
-//                        Text("Tier \(index + 1) Price: $\(tierBinding.price.wrappedValue, specifier: "%.2f")")
-//                        Spacer()
-//                    }
-//                    .padding(.horizontal)
-//                    
-//                    Slider(value: tierBinding.price, in: 0...500, step: 5)
-//                        .accentColor(.blue)
-//                        .padding(.horizontal)
-//                    
-//                    Stepper("Tickets: \(tierBinding.tickets)", value: tierBinding.tickets, in: 0...totalTickets)
-//                        .padding(.horizontal)
-//                }
-//                .padding(.vertical, 10)
-//                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-//                .shadow(radius: 5)
-//            }
-        }
-    }
 
-    func adjustTiers() {
-        if numberOfTiers > viewModel.tiers.count {
-            let additionalTiers = numberOfTiers - viewModel.tiers.count
-            viewModel.tiers.append(contentsOf: Array(repeating: Tier(name: "", price: 50.0, numTickets: 50), count: additionalTiers))
-        } else if numberOfTiers < viewModel.tiers.count {
-            viewModel.tiers.removeLast(viewModel.tiers.count - numberOfTiers)
-        }
-    }
+//    func adjustTiers() {
+//        if numberOfTiers > viewModel.tiers.count {
+//            let additionalTiers = numberOfTiers - viewModel.tiers.count
+//            viewModel.tiers.append(contentsOf: Array(repeating: Tier(name: "", price: 50.0, numTickets: 50), count: additionalTiers))
+//        } else if numberOfTiers < viewModel.tiers.count {
+//            viewModel.tiers.removeLast(viewModel.tiers.count - numberOfTiers)
+//        }
+//    }
 
     var waitlistSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             Toggle("Enable Waitlist", isOn: $viewModel.isWaitlistEnabled)
                 .padding(.horizontal)
-            
-            if viewModel.isWaitlistEnabled {
-                Stepper("Waitlist Opens After \(viewModel.waitlistOpenAfterSoldOut) Minutes", value: $viewModel.waitlistOpenAfterSoldOut, in: 1...120)
-                    .padding(.horizontal)
-            }
+                .tint(Color.primary)
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-        .shadow(radius: 5)
-    }
-
-    var paymentOverviewSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Payment Overview")
-                .font(.title3)
-                .fontWeight(.bold)
-                .foregroundColor(.green)
-            
-            HStack {
-                Text("Total Tickets: \(viewModel.totalTickets)")
-                Spacer()
-                Text("Price Per Ticket: $\(viewModel.pricePerTicket, specifier: "%.2f")")
-            }
-            .padding(.horizontal)
-            
-            if viewModel.tieredPricing {
-                ForEach(viewModel.tiers) { tier in
-                    HStack {
-                        Text("\(tier.name): $\(tier.price, specifier: "%.2f")")
-                        Spacer()
-                        Text("Tickets: \(tier.numTickets)")
-                    }
-                    .padding(.horizontal)
-                }
-            }
-        }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+        .background(RoundedRectangle(cornerRadius: 25).fill(Color.thirdBackground))
         .shadow(radius: 5)
     }
 
@@ -275,14 +239,18 @@ struct HostEventView: View {
             Text("Restrictions")
                 .font(.title3)
                 .fontWeight(.bold)
-                .foregroundColor(.red)
-            
-            Stepper("Max Tickets Per Person: \(viewModel.maxTicketsPerPerson)", value: $viewModel.maxTicketsPerPerson, in: 1...15)
-                .padding(.horizontal)
+                .foregroundColor(Color.secondary)
+            VStack {
+
+                Stepper("Max Tickets Per Person: \(viewModel.maxTicketsPerPerson)", value: $viewModel.maxTicketsPerPerson, in: 1...15)
+                    .accentColor(Color.primary)
+
+            }
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 25).fill(Color.thirdBackground))
+            .shadow(radius: 5)
         }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-        .shadow(radius: 5)
+
     }
 }
 
@@ -331,8 +299,7 @@ struct ImagePicker: View {
     }
 }
 
-struct HostEventView_Previews: PreviewProvider {
-    static var previews: some View {
-        HostEventView()
-    }
+#Preview {
+    HostEventView()
 }
+

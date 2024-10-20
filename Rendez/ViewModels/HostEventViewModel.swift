@@ -5,7 +5,13 @@
 //  Created by Suraj Mehrotra on 10/19/24.
 //
 
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
+import Foundation
 import SwiftUI
+import _PhotosUI_SwiftUI
+
 
 class HostEventViewModel: ObservableObject {
     @Published var eventName: String = ""
@@ -20,30 +26,22 @@ class HostEventViewModel: ObservableObject {
     @Published var tieredPricing: Bool = false
     @Published var tiers: [Tier] = [Tier(name: "", price: 50.0, numTickets: 50)]
     @Published var selectedImage: UIImage? = nil
-    @Published var hostModel = HostViewModel()
     @Published var docID: String = ""
 
+    @Published var startDate: Date = Date()
+    @Published var endDate: Date = Date()
+    @Published var imageItem: PhotosPickerItem?
+
+
+    @Published var host: Host?
+    var hostID: String = ""
+    @State var orgName: String = ""
+    var eventsRefs: [DocumentReference] = []
+
+    private let db = Firestore.firestore()
+
     var totalTicketsInput: String = "100"
-    
-    func createEvent() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        hostModel.createHostEvent(event: Event(
-            title: eventName,
-            description: eventDescription,
-            price: pricePerTicket,
-            orgName: "",
-            address: loc,
-            date: formatter.string(from: eventDate),
-            imageName: "",
-            tiers: tiers, docID: docID,
-            totalTickets: totalTickets,
-            isWaitlistEnabled: isWaitlistEnabled,
-            waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut,
-            maxTicketsPerPerson: maxTicketsPerPerson,
-            tieredPricing: tieredPricing
-        ))
-    }
+
     
     func updateTotalTickets() {
         if let value = Int(totalTicketsInput) {
@@ -52,7 +50,77 @@ class HostEventViewModel: ObservableObject {
             totalTickets = 0
         }
     }
-    
+
+    func createEvent() async {
+        getCurrentHost()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let eventDict: [String: Any] = [
+            "title": self.eventName,
+            "description": self.eventDescription,
+            "price": self.pricePerTicket,
+            "orgName": self.orgName,
+            "address": self.loc,
+            "date": self.eventDate,
+            "imageName": "",
+            "tiers": self.tiers.map { tier in
+                return [
+                    "name": tier.name,
+                    "price": tier.price,
+                    "numTickets": tier.numTickets
+                ]
+            }
+        ]
+        let doc = db.collection("EVENTS").addDocument(data: eventDict) {error in
+            if let error = error {
+                print("Error fetching document: \(error)")
+                return
+            }
+        }
+        let hostDoc = db.collection("HOSTS").document(hostID)
+            hostDoc.getDocument() { (document, error) in
+                if let error = error {
+                    print("Error fetching document: \(error)")
+                    return
+                }
+
+                guard let document = document, document.exists else {
+                    print("Document does not exist")
+                    return
+                }
+
+                let data = document.data()
+                self.eventsRefs = data?["events"] as? [DocumentReference] ?? []
+                self.eventsRefs.append(doc)
+                hostDoc.updateData(["events" : self.eventsRefs])
+            }
+
+    }
+
+    func getCurrentHost() {
+        if let host = Auth.auth().currentUser {
+            self.hostID = host.uid
+//            db.collection("HOSTS").document(hostID).getDocument() { (document, error) in
+//                if let error = error {
+//                    print("Error fetching document: \(error)")
+//                    return
+//                }
+//
+//                guard let document = document, document.exists else {
+//                    print("Document does not exist")
+//                    return
+//                }
+//
+//                let data = document.data()
+//                self.orgName = data?["name"] as? String ?? ""
+//                self.eventsRefs = data?["events"] as? [DocumentReference] ?? []
+//            }
+        } else {
+            print("No user is signed in.")
+            self.hostID = "No user signed in"
+        }
+    }
+
 //    func adjustTiers(numberOfTiers: Int) {
 //        if numberOfTiers > tiers.count {
 //            let additionalTiers = numberOfTiers - tiers.count

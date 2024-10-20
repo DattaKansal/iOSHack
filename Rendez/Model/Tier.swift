@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Tier: Identifiable {
+struct Tier: Identifiable, Hashable {
     let id = UUID()
     var name : String
     var price : Double
