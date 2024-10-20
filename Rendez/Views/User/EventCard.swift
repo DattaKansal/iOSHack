@@ -1,3 +1,9 @@
+//
+//  EventCard.swift
+//  Rendez
+//
+//  Created by Datta Kansal on 10/18/24.
+//
 import SwiftUI
 struct EventCard: View {
     let event: Event
@@ -6,43 +12,35 @@ struct EventCard: View {
         ZStack {
             Image(event.imageName)
                 .resizable()
-                .frame(width: 300, height: 400)
-                .scaledToFill()
                 .aspectRatio(contentMode: .fill)
+                .frame(width: 300, height: 400)
                 .clipped()
                 .cornerRadius(20)
                 .overlay(
-                    // Create a gradient to darken the bottom part
                     LinearGradient(
-                        gradient: Gradient(colors: [Color.clear, Color.black.opacity(1)]),
+                        gradient: Gradient(colors: [Color.clear, Color.black.opacity(0.7)]),
                         startPoint: .center,
                         endPoint: .bottom
                     )
-                    .frame(height: 400), // Adjust height based on how much of the image you want to darken
-                    alignment: .bottom
                 )
-            HStack {
-                VStack(alignment: .leading) {
-                    Spacer()
-                    Text(event.title)
-                        .multilineTextAlignment(.leading)
-                        .font(.title)
-                        .bold()
-                        .foregroundColor(.white)
-                    Label(event.startDate, systemImage: "calendar")
-                        .foregroundColor(.secondary)
-                    Label("\(event.address)", systemImage: "location")
-                        .foregroundColor(.secondary)
-                    let price = event.price == 0 ? "Free" : "$" + String(format: "%.2f", event.price)
-                    Label("\(price)", systemImage: "dollarsign.circle")
-                        .foregroundColor(.secondary)
-                }
-                .padding(20)
+            
+            VStack(alignment: .leading) {
                 Spacer()
+                Text(event.title)
+                    .font(.title2)
+                    .bold()
+                    .foregroundColor(.white)
+                Label(event.startDate, systemImage: "calendar")
+                    .foregroundColor(.white)
+                Label(event.address, systemImage: "location")
+                    .foregroundColor(.white)
+                Label(event.price == 0 ? "Free" : "$\(String(format: "%.2f", event.price))", systemImage: "dollarsign.circle")
+                    .foregroundColor(.white)
             }
+            .padding(20)
         }
-        .background(Color.secondBackground)
         .frame(width: 300, height: 400)
+        .background(Color.primaryBackground)
         .cornerRadius(20)
     }
 }
