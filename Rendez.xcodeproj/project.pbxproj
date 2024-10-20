@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842F37B52CC414A9007FBC84 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = 842F37B42CC414A9007FBC84 /* Stripe */; };
+		842F37B72CC414A9007FBC84 /* StripeApplePay in Frameworks */ = {isa = PBXBuildFile; productRef = 842F37B62CC414A9007FBC84 /* StripeApplePay */; };
+		842F37B92CC414A9007FBC84 /* StripeCardScan in Frameworks */ = {isa = PBXBuildFile; productRef = 842F37B82CC414A9007FBC84 /* StripeCardScan */; };
+		842F37BB2CC414A9007FBC84 /* StripeFinancialConnections in Frameworks */ = {isa = PBXBuildFile; productRef = 842F37BA2CC414A9007FBC84 /* StripeFinancialConnections */; };
+		842F37BD2CC414A9007FBC84 /* StripeIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 842F37BC2CC414A9007FBC84 /* StripeIdentity */; };
 		848909572CC33F190060D7E0 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 848909562CC33F190060D7E0 /* FirebaseAnalytics */; };
 		848909592CC33F190060D7E0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 848909582CC33F190060D7E0 /* FirebaseAnalyticsOnDeviceConversion */; };
 		8489095B2CC33F190060D7E0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 8489095A2CC33F190060D7E0 /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -50,9 +55,22 @@
 		84A8CCEE2CC3226100E501CC /* RendezUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RendezUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		842F37CA2CC4A1AB007FBC84 /* Exceptions for "Rendez" folder in "Rendez" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 84A8CCD32CC3226000E501CC /* Rendez */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		84A8CCD62CC3226000E501CC /* Rendez */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				842F37CA2CC4A1AB007FBC84 /* Exceptions for "Rendez" folder in "Rendez" target */,
+			);
 			path = Rendez;
 			sourceTree = "<group>";
 		};
@@ -73,10 +91,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				842F37B92CC414A9007FBC84 /* StripeCardScan in Frameworks */,
 				8489096F2CC33F190060D7E0 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				842F37B52CC414A9007FBC84 /* Stripe in Frameworks */,
+				842F37BB2CC414A9007FBC84 /* StripeFinancialConnections in Frameworks */,
 				848909712CC33F190060D7E0 /* FirebaseFunctions in Frameworks */,
 				848909692CC33F190060D7E0 /* FirebaseDatabase in Frameworks */,
 				8489096B2CC33F190060D7E0 /* FirebaseDynamicLinks in Frameworks */,
+				842F37B72CC414A9007FBC84 /* StripeApplePay in Frameworks */,
 				8489095D2CC33F190060D7E0 /* FirebaseAppCheck in Frameworks */,
 				848909612CC33F190060D7E0 /* FirebaseAuth in Frameworks */,
 				848909572CC33F190060D7E0 /* FirebaseAnalytics in Frameworks */,
@@ -84,6 +106,7 @@
 				848909772CC33F190060D7E0 /* FirebaseInstallations in Frameworks */,
 				848909732CC33F190060D7E0 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				8489095F2CC33F190060D7E0 /* FirebaseAppDistribution-Beta in Frameworks */,
+				842F37BD2CC414A9007FBC84 /* StripeIdentity in Frameworks */,
 				8489095B2CC33F190060D7E0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				848909752CC33F190060D7E0 /* FirebaseInAppMessaging-Beta in Frameworks */,
 				848909632CC33F190060D7E0 /* FirebaseAuthCombine-Community in Frameworks */,
@@ -169,6 +192,11 @@
 				848909742CC33F190060D7E0 /* FirebaseInAppMessaging-Beta */,
 				848909762CC33F190060D7E0 /* FirebaseInstallations */,
 				848909782CC33F190060D7E0 /* FirebaseMLModelDownloader */,
+				842F37B42CC414A9007FBC84 /* Stripe */,
+				842F37B62CC414A9007FBC84 /* StripeApplePay */,
+				842F37B82CC414A9007FBC84 /* StripeCardScan */,
+				842F37BA2CC414A9007FBC84 /* StripeFinancialConnections */,
+				842F37BC2CC414A9007FBC84 /* StripeIdentity */,
 			);
 			productName = iOSHack;
 			productReference = 84A8CCD42CC3226000E501CC /* Rendez.app */;
@@ -254,6 +282,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				848909552CC33F190060D7E0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				842F37B32CC414A9007FBC84 /* XCRemoteSwiftPackageReference "stripe-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 84A8CCD52CC3226000E501CC /* Products */;
@@ -458,6 +487,7 @@
 				DEVELOPMENT_TEAM = 6UZT7756JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Rendez/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -486,6 +516,7 @@
 				DEVELOPMENT_TEAM = 6UZT7756JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Rendez/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -614,6 +645,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		842F37B32CC414A9007FBC84 /* XCRemoteSwiftPackageReference "stripe-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stripe/stripe-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 23.31.1;
+			};
+		};
 		848909552CC33F190060D7E0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -625,6 +664,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		842F37B42CC414A9007FBC84 /* Stripe */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 842F37B32CC414A9007FBC84 /* XCRemoteSwiftPackageReference "stripe-ios" */;
+			productName = Stripe;
+		};
+		842F37B62CC414A9007FBC84 /* StripeApplePay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 842F37B32CC414A9007FBC84 /* XCRemoteSwiftPackageReference "stripe-ios" */;
+			productName = StripeApplePay;
+		};
+		842F37B82CC414A9007FBC84 /* StripeCardScan */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 842F37B32CC414A9007FBC84 /* XCRemoteSwiftPackageReference "stripe-ios" */;
+			productName = StripeCardScan;
+		};
+		842F37BA2CC414A9007FBC84 /* StripeFinancialConnections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 842F37B32CC414A9007FBC84 /* XCRemoteSwiftPackageReference "stripe-ios" */;
+			productName = StripeFinancialConnections;
+		};
+		842F37BC2CC414A9007FBC84 /* StripeIdentity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 842F37B32CC414A9007FBC84 /* XCRemoteSwiftPackageReference "stripe-ios" */;
+			productName = StripeIdentity;
+		};
 		848909562CC33F190060D7E0 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 848909552CC33F190060D7E0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
