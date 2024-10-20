@@ -13,9 +13,8 @@ struct CheckoutItem: Codable {
 }
 
 struct EventDetailView: View {
-    var event: Event
+    let event: Event
     @State private var tierCounts: [UUID: Int] = [:]
-<<<<<<< HEAD
     @State private var isActive: Bool = false
     @State private var clientSecret: String?
     @State private var errorMessage: String?
@@ -61,89 +60,6 @@ struct EventDetailView: View {
                         self.errorMessage = "No internet connection. Please check your network settings and try again."
                     } else {
                         self.errorMessage = "Network error: \(error.localizedDescription)"
-=======
-    @State private var userHome: Bool = false
-
-    var body: some View {
-        NavigationStack{
-            NavigationLink(destination: UserHome(), isActive: $userHome) {}
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    // Top image
-                    Image(event.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: UIScreen.main.bounds.height * 0.4)
-                        .clipped()
-                    
-                    VStack(alignment: .leading, spacing: 15) {
-                        // Title and organization name
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(event.title)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                            Text(event.orgName)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                                .bold()
-                        }
-                        Divider()
-                            .background(Color.secondary)
-                        // Description
-                        Text(event.description)
-                            .font(.body)
-                            .foregroundColor(.primary)
-
-                        Divider()
-                            .background(Color.secondary)
-
-                        // Address and timings
-                        HStack {
-                            Image(systemName: "location")
-                            Text(event.address)
-                        }
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        
-                        HStack {
-                            Image(systemName: "calendar")
-                            Text(event.date)
-                        }
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-
-                        Divider()
-                            .background(Color.secondary)
-
-                        // Tiers list
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Ticket Tiers")
-                                .font(.headline)
-                                .foregroundColor(.white)
-
-                            ForEach(event.tiers.compactMap { $0 }) { tier in
-                                TierView(tier: tier, count: tierCounts[tier.id] ?? 0) { newCount in
-                                    tierCounts[tier.id] = newCount
-                                }
-                            }
-                        }
-                        
-                        // Book tickets button
-                        Button(action: {
-                            // Add booking functionality
-                        }) {
-                            Text("Book Tickets")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.primary)
-                                .foregroundColor(.white)
-                                .cornerRadius(30)
-                        }
-                        .padding(.top)
-                        .disabled(tierCounts.values.reduce(0, +) == 0)
-                        Spacer()
->>>>>>> 30adbceda221ff72c8212adf86286325c610b61a
                     }
                     print("Network error: \(error.localizedDescription)")
                     return
@@ -248,7 +164,7 @@ struct EventDetailView: View {
                         Text("Ticket Tiers")
                             .font(.headline)
                             .foregroundColor(.secondary)
-                        
+//                        print(event.tiers.count)
                         ForEach(event.tiers.compactMap { $0 }) { tier in
                             TierView(tier: tier, count: tierCounts[tier.id] ?? 0) { newCount in
                                 tierCounts[tier.id] = newCount
@@ -293,35 +209,14 @@ struct EventDetailView: View {
                     print("clientSecret changed to \(newValue ?? "nil")")
                 }
             }
-<<<<<<< HEAD
-=======
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        self.userHome = true;
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(Color.primary)
-                            .bold()
-                    }
-                }
-            }
-            .edgesIgnoringSafeArea(.top)
-            .background(Color.primaryBackground)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(true)
->>>>>>> 30adbceda221ff72c8212adf86286325c610b61a
         }
     }
 }
 
 
-<<<<<<< HEAD
 //#Preview {
 //    EventDetailView(event: Event(title: "Robot Speaker Event", description: "Learn and play with some robots", price: 0, orgName: "Robojackets", address: "SCC", date: "Nov 1 8-10 pm", imageName: "robot", tiers: [Tier(name: "Tier 1", price: 15, numTickets: 50), Tier(name: "Tier 2", price: 30, numTickets: 100)]))
 //}
 //
 //
 //
-=======
->>>>>>> 30adbceda221ff72c8212adf86286325c610b61a

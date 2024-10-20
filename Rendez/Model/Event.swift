@@ -28,7 +28,7 @@ struct Event: Identifiable {
     var isWaitlistEnabled: Bool
     var waitlistOpenAfterSoldOut: Int
     var maxTicketsPerPerson: Int
-    var tieredPricing: Bool
+//    var tieredPricing: Bool
  //   var selectedImage: UIImage?
     
 }
