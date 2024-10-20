@@ -10,9 +10,11 @@ import SwiftUI
 struct EventDetailView: View {
     var event: Event
     @State private var tierCounts: [UUID: Int] = [:]
-    
+    @State private var userHome: Bool = false
+
     var body: some View {
         NavigationStack{
+            NavigationLink(destination: UserHome(), isActive: $userHome) {}
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     // Top image
@@ -91,6 +93,17 @@ struct EventDetailView: View {
                         Spacer()
                     }
                     .padding()
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.userHome = true;
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(Color.primary)
+                            .bold()
+                    }
                 }
             }
             .edgesIgnoringSafeArea(.top)

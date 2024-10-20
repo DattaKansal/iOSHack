@@ -18,7 +18,7 @@ struct YouView: View {
                     Rectangle()
                         .fill(Color.secondary)
                         .ignoresSafeArea()
-                        .frame(height: 250)
+                        .frame(height: 255)
                     VStack {
                         Spacer()
                         Image(systemName: "person.circle.fill")
@@ -26,7 +26,7 @@ struct YouView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 100, height: 100)
                             .foregroundColor(.black)
-                        Text(viewModel.name)
+                        Text("Hey, " + viewModel.name)
                             .bold()
                             .font(.title2)
                     }
@@ -35,7 +35,7 @@ struct YouView: View {
                 }
                 Spacer()
                 HStack {
-                    Text("Past Tickets")
+                    Text("Attended Events")
                         .font(.system(size: 40))
                         .bold()
                         .foregroundColor(Color.white)
@@ -47,10 +47,8 @@ struct YouView: View {
                     ScrollView(.horizontal) {
                         HStack(spacing: 15) {
                             ForEach(events ?? []) { event in
-                                NavigationLink(destination: EventDetailView(event: event)) {
-                                    EventCard(event: event)
-                                        .shadow(color: Color.black.opacity(0.6), radius: 10, x: 0, y: 10)
-                                }
+                                EventCard(event: event)
+                                    .shadow(color: Color.black.opacity(0.6), radius: 10, x: 0, y: 10)
                             }
                         }
                         Spacer()

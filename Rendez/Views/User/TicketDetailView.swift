@@ -21,53 +21,69 @@ struct TicketDetailView: View {
     var body: some View {
         NavigationStack {
             NavigationLink(destination: UserHome(), isActive: $userHome) {}
-            VStack(alignment: .leading) {
-                Spacer()
-                HStack {
-                    Text("Your Tickets")
-                        .font(.system(size: 40))
-                        .bold()
-                        .foregroundColor(Color.white)
+            ScrollView {
+                VStack(alignment: .leading) {
                     Spacer()
-                }
-                .padding(.leading, 25)
-
-                ZStack {
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 15) {
-                            ForEach(tickets ?? []) { ticket in
-                                TicketCard(ticket: ticket, event: event)
-                                    .shadow(color: Color.black.opacity(0.6), radius: 10, x: 0, y: 10)
-
-                            }
-                        }
+                    HStack {
+                        Text("Your Tickets")
+                            .font(.system(size: 40))
+                            .bold()
+                            .foregroundColor(Color.white)
                         Spacer()
                     }
-                    .scrollTargetBehavior(.viewAligned)
-                    .safeAreaPadding(.horizontal, 25)
-                    .frame(height: 430)
-                    .scrollIndicators(.hidden)
+                    .padding(.leading, 25)
 
+                    ZStack {
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 15) {
+                                ForEach(tickets ?? []) { ticket in
+                                    TicketCard(ticket: ticket, event: event)
+                                        .shadow(color: Color.black.opacity(0.6), radius: 10, x: 0, y: 10)
+
+                                }
+                            }
+                            Spacer()
+                        }
+                        .scrollTargetBehavior(.viewAligned)
+                        .safeAreaPadding(.horizontal, 25)
+                        .frame(height: 430)
+                        .scrollIndicators(.hidden)
+
+                    }
+                    VStack(alignment: .leading) {
+                        Text(self.event.title)
+                            .font(.title)
+                            .bold()
+                            .foregroundColor(.white)
+
+
+                        Label(self.event.date, systemImage: "calendar")
+                            .foregroundColor(.secondary)
+                        Label("\(self.event.address)", systemImage: "location")
+                            .foregroundColor(.secondary)
+
+                        Divider()
+                            .background(Color.secondary)
+                            .padding(.trailing, 25)
+
+                        Text("Announcements")
+                            .font(.title)
+                            .bold()
+                            .foregroundColor(.white)
+
+                    }
+                    .padding(.leading, 25)
+                    Spacer()
                 }
-                VStack(alignment: .leading) {
-                    Text(self.event.title)
-                        .font(.title)
-                        .bold()
-                        .foregroundColor(.white)
-                    Label(self.event.date, systemImage: "calendar")
-                        .foregroundColor(.secondary)
-                    Label("\(self.event.address)", systemImage: "location")
-                        .foregroundColor(.secondary)
+                .background(Color.primaryBackground)
+                .onAppear {
+                    Task {
+                        await fetchTickets() // Fetch events asynchronously on appearance
+                    }
                 }
-                .padding(.leading, 25)
-                Spacer()
             }
             .background(Color.primaryBackground)
-            .onAppear {
-                Task {
-                    await fetchTickets() // Fetch events asynchronously on appearance
-                }
-            }
+
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -128,6 +144,7 @@ struct TicketCard: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 250, height: 250)
+                .cornerRadius(15)
             HStack {
                 VStack(alignment: .center) {
                     Spacer()

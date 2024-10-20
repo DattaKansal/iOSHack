@@ -25,6 +25,7 @@ struct EventCard: View {
                 VStack(alignment: .leading) {
                     Spacer()
                     Text(event.title)
+                        .multilineTextAlignment(.leading)
                         .font(.title)
                         .bold()
                         .foregroundColor(.white)
