@@ -31,6 +31,7 @@ struct UserHome: View {
                     Label("You", systemImage: "person")
                 }
                 .toolbarBackground(Color.secondary, for: .tabBar)
+                .toolbarBackground(.visible, for: .tabBar)
                 .toolbarBackgroundVisibility(.visible, for: .tabBar)
         }
         .tint(Color.primaryBackground)

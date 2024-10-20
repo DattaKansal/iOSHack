@@ -50,11 +50,9 @@ class UserViewModel: ObservableObject {
             let orgName = docData["orgName"] as? String ?? ""
             let imageName = docData["imageName"] as? String ?? ""
             let endDateTimeString = docData["end_date_time"] as? String ?? ""
-            let totalTickets = docData["totalTickets"] as? Int ?? 0
             let isWaitlistEnabled = docData["isWaitlistEnabled"] as? Bool ?? false
-            let waitlistOpenAfterSoldOut = docData["waitlistOpenAfterSoldOut"] as? Int ?? 0
             let maxTicketsPerPerson = docData["maxTicketsPerPerson"] as? Int ?? 0
-            
+
             guard !attendees.contains(userID) else {
                 continue
             }
@@ -68,8 +66,7 @@ class UserViewModel: ObservableObject {
             guard startDateTime < currentDate else {
                 continue
             }
-
-            // Fetch the TIERS subcollection
+          
             let tiersRef = db.collection("EVENTS").document(docID).collection("TIERS")
             let tiersSnapshot = try await tiersRef.getDocuments()
 
@@ -80,24 +77,9 @@ class UserViewModel: ObservableObject {
                 let price = tierData["price"] as? Double ?? 0.0
                 return Tier(name: name, price: price, numTickets: numTickets)
             }
-
-            let event = Event(
-                title: title,
-                description: description,
-                price: price,
-                orgName: orgName,
-                address: address,
-                date: startDateTimeString,
-                imageName: imageName,
-                tiers: tiers,
-                docID: docID,
-                totalTickets: totalTickets,
-                isWaitlistEnabled: isWaitlistEnabled,
-                waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut,
-                maxTicketsPerPerson: maxTicketsPerPerson
-            )
-
-            events.append(event)
+            return Event(title: title, description: description, price: price,
+                         orgName: orgName, address: address, startDate: startDateTimeString, endDate: endDateTimeString,
+                         imageName: imageName, tiers: tiers, docID: docID, isWaitlistEnabled: isWaitlistEnabled, maxTicketsPerPerson: maxTicketsPerPerson)
         }
 
         return events
@@ -134,11 +116,8 @@ class UserViewModel: ObservableObject {
             let orgName = docData["orgName"] as? String ?? ""
             let imageName = docData["imageName"] as? String ?? ""
             let endDateTimeString = docData["end_date_time"] as? String ?? ""
-            let totalTickets = docData["totalTickets"] as? Int ?? 0
             let isWaitlistEnabled = docData["isWaitlistEnabled"] as? Bool ?? false
-            let waitlistOpenAfterSoldOut = docData["waitlistOpenAfterSoldOut"] as? Int ?? 0
             let maxTicketsPerPerson = docData["maxTicketsPerPerson"] as? Int ?? 0
-            let tieredPricing = docData["tieredPricing"] as? Bool ?? false
             guard attendees.contains(userID) else {
                 return nil
             }
@@ -156,8 +135,8 @@ class UserViewModel: ObservableObject {
                 return nil
             }
             return Event(title: title, description: description, price: price,
-                orgName: orgName, address: address, date: startDateTimeString,
-                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson)
+                orgName: orgName, address: address, startDate: startDateTimeString, endDate: endDateTimeString,
+                         imageName: imageName, tiers: [], docID: docID, isWaitlistEnabled: isWaitlistEnabled, maxTicketsPerPerson: maxTicketsPerPerson)
         }
         return events
     }
@@ -192,11 +171,8 @@ class UserViewModel: ObservableObject {
             let orgName = docData["orgName"] as? String ?? ""
             let imageName = docData["imageName"] as? String ?? ""
             let endDateTimeString = docData["end_date_time"] as? String ?? ""
-            let totalTickets = docData["totalTickets"] as? Int ?? 0
             let isWaitlistEnabled = docData["isWaitlistEnabled"] as? Bool ?? false
-            let waitlistOpenAfterSoldOut = docData["waitlistOpenAfterSoldOut"] as? Int ?? 0
             let maxTicketsPerPerson = docData["maxTicketsPerPerson"] as? Int ?? 0
-            let tieredPricing = docData["tieredPricing"] as? Bool ?? false
             guard attendees.contains(userID) else {
                 return nil
             }
@@ -214,8 +190,8 @@ class UserViewModel: ObservableObject {
                 return nil
             }
             return Event(title: title, description: description, price: price,
-                orgName: orgName, address: address, date: startDateTimeString,
-                         imageName: imageName, tiers: [], docID: docID, totalTickets: totalTickets, isWaitlistEnabled: isWaitlistEnabled, waitlistOpenAfterSoldOut: waitlistOpenAfterSoldOut, maxTicketsPerPerson: maxTicketsPerPerson)
+                orgName: orgName, address: address, startDate: startDateTimeString, endDate: endDateTimeString,
+                         imageName: imageName, tiers: [], docID: docID, isWaitlistEnabled: isWaitlistEnabled, maxTicketsPerPerson: maxTicketsPerPerson)
         }
         return events
     }

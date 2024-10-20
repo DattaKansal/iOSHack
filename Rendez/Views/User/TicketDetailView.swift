@@ -57,7 +57,7 @@ struct TicketDetailView: View {
                             .foregroundColor(.white)
 
 
-                        Label(self.event.date, systemImage: "calendar")
+                        Label(self.event.startDate, systemImage: "calendar")
                             .foregroundColor(.secondary)
                         Label("\(self.event.address)", systemImage: "location")
                             .foregroundColor(.secondary)
