@@ -26,9 +26,14 @@ struct UserHome: View {
                 .toolbarBackground(Color.secondary, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
 
+            YouView()
+                .tabItem {
+                    Label("You", systemImage: "person")
+                }
+                .toolbarBackground(Color.secondary, for: .tabBar)
+                .toolbarBackgroundVisibility(.visible, for: .tabBar)
         }
         .tint(Color.primaryBackground)
-
     }
 }
 
