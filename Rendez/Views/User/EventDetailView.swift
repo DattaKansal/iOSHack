@@ -202,7 +202,7 @@ struct EventDetailView: View {
                         }
 
                         NavigationLink(
-                            destination: CheckoutView(clientSecret: clientSecret ?? ""),
+                            destination: CheckoutView(clientSecret: clientSecret ?? "", checkoutItems: checkoutItems),
                             isActive: $isActive,
                             label: { EmptyView() }
                         )
