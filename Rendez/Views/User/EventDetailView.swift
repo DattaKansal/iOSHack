@@ -13,7 +13,7 @@ struct EventDetailView: View {
     @State private var isActive: Bool = false
     @State private var clientSecret: String?
     @State private var errorMessage: String?
-    @State private var checkoutItems: [CheckoutItem] = []  // New state variable
+    @State private var checkoutItems: [CheckoutItem] = []
 
     private func startCheckout() {
         let selectedTiers = event.tiers.compactMap { tier -> CheckoutItem? in
@@ -30,7 +30,7 @@ struct EventDetailView: View {
             return
         }
         
-        self.checkoutItems = selectedTiers  // Store the created CheckoutItems
+        self.checkoutItems = selectedTiers
         
         guard let url = URL(string: "https://special-coffee-turkey.glitch.me/create-payment-intent") else {
             self.errorMessage = "Invalid URL"
@@ -40,7 +40,7 @@ struct EventDetailView: View {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.timeoutInterval = 30 // Set a 30-second timeout
+        request.timeoutInterval = 30
         
         do {
             let payload = ["items": selectedTiers]
@@ -111,7 +111,6 @@ struct EventDetailView: View {
         
         task.resume()
         
-        // Set a timer to cancel the request if it takes too long
         DispatchQueue.main.asyncAfter(deadline: .now() + 35) {
             if task.state == .running {
                 task.cancel()
@@ -132,9 +131,6 @@ struct EventDetailView: View {
                     .ignoresSafeArea()
                 Spacer()
                 VStack(alignment: .leading, spacing: 0) {
-                    // Top image
-
-
                     VStack(alignment: .leading, spacing: 15) {
                         // Title and organization name
                         VStack(alignment: .leading, spacing: 5) {
@@ -177,8 +173,8 @@ struct EventDetailView: View {
                             Text("Ticket Tiers")
                                 .font(.headline)
                                 .foregroundColor(.secondary)
-                            //                        print(event.tiers.count)
-                            ForEach(event.tiers.compactMap { $0 }) { tier in
+                            
+                            ForEach(event.tiers) { tier in
                                 TierView(tier: tier, count: tierCounts[tier.id] ?? 0) { newCount in
                                     tierCounts[tier.id] = newCount
                                 }

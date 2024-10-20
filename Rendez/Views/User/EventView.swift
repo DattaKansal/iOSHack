@@ -65,7 +65,7 @@ struct EventView: View {
         }
     }
 }
-
-#Preview {
-    EventView()
-}
+//
+//#Preview {
+//    EventView()
+//}
