@@ -21,5 +21,13 @@ struct Event: Identifiable {
     let tiers: [Tier?]
     
 // let numAttendees: Int
+
+    var totalTickets: Int
+ //   var pricePerTicket: Double
+    var isWaitlistEnabled: Bool
+    var waitlistOpenAfterSoldOut: Int
+    var maxTicketsPerPerson: Int
+    var tieredPricing: Bool
+ //   var selectedImage: UIImage?
     
 }
