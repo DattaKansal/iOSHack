@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct CheckoutIntentResponse: Decodable {
+struct CheckoutIntentResponse: Codable {
     let clientSecret: String
     let dpmCheckerLink: String
 }

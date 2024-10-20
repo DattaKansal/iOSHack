@@ -13,10 +13,16 @@ struct CheckoutView: View {
     @State private var paymentMethodParams: STPPaymentMethodParams?
     @State private var message: String = ""
     @State private var isPaymentSuccessful: Bool = false
+    @State private var isClientSecretValid: Bool = false
     
     private let paymentGatewayController = PaymentGatewayController()
     
     private func pay() {
+        guard !clientSecret.isEmpty else {
+            message = "Error: Invalid client secret"
+            return
+        }
+        
         let paymentIntentParams = STPPaymentIntentParams(clientSecret: clientSecret)
         paymentIntentParams.paymentMethodParams = paymentMethodParams
         
@@ -41,31 +47,36 @@ struct CheckoutView: View {
                 .font(.title)
                 .padding()
             
-            STPPaymentCardTextField.Representable(paymentMethodParams: $paymentMethodParams)
-                .padding()
-            
-            Button("Pay") {
-                pay()
-            }
-            .disabled(paymentMethodParams == nil)
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            
-            Text(message)
-                .foregroundColor(isPaymentSuccessful ? .green : .red)
-            
-            if isPaymentSuccessful {
-                NavigationLink("Return to Events", destination: EventView())
+            if clientSecret.isEmpty {
+                Text("Error: Invalid client secret")
+                    .foregroundColor(.red)
+            } else {
+                STPPaymentCardTextField.Representable(paymentMethodParams: $paymentMethodParams)
                     .padding()
+                
+                Button("Pay") {
+                    pay()
+                }
+                .disabled(paymentMethodParams == nil)
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                
+                Text(message)
+                    .foregroundColor(isPaymentSuccessful ? .green : .red)
+                
+                if isPaymentSuccessful {
+                    NavigationLink("Return to Events", destination: EventView())
+                        .padding()
+                }
             }
         }
         .padding()
         .navigationTitle("Checkout")
+        .onAppear {
+            print("CheckoutView appeared with client secret: \(clientSecret)")
+            isClientSecretValid = !clientSecret.isEmpty
+        }
     }
 }
-
-//#Preview {
-//    CheckoutView()
-//}

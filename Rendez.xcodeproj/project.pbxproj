@@ -55,9 +55,22 @@
 		84A8CCEE2CC3226100E501CC /* RendezUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RendezUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		842F37CA2CC4A1AB007FBC84 /* Exceptions for "Rendez" folder in "Rendez" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 84A8CCD32CC3226000E501CC /* Rendez */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		84A8CCD62CC3226000E501CC /* Rendez */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				842F37CA2CC4A1AB007FBC84 /* Exceptions for "Rendez" folder in "Rendez" target */,
+			);
 			path = Rendez;
 			sourceTree = "<group>";
 		};
@@ -474,6 +487,7 @@
 				DEVELOPMENT_TEAM = 6UZT7756JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Rendez/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -502,6 +516,7 @@
 				DEVELOPMENT_TEAM = 6UZT7756JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Rendez/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
