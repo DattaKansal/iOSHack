@@ -19,7 +19,16 @@ struct Event: Identifiable {
     let date: String
     let imageName: String
     let tiers: [Tier?]
-    
+    let docID: String
+
 // let numAttendees: Int
+
+    var totalTickets: Int
+ //   var pricePerTicket: Double
+    var isWaitlistEnabled: Bool
+    var waitlistOpenAfterSoldOut: Int
+    var maxTicketsPerPerson: Int
+    var tieredPricing: Bool
+ //   var selectedImage: UIImage?
     
 }

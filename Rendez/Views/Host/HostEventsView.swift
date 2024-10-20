@@ -1,19 +1,22 @@
 //
-//  EventView.swift
+//  HostEventsView.swift
 //  Rendez
 //
-//  Created by Datta Kansal on 10/19/24.
+//  Created by Suraj Mehrotra on 10/19/24.
 //
 
 import SwiftUI
 
-struct EventView: View {
-    @StateObject private var viewModel = UserViewModel()
+struct HostEventsView: View {
+    @StateObject private var viewModel = HostViewModel()
     @State var events: [Event]? = nil
-    @State private var userHome: Bool = false
+    @State private var hostHome: Bool = false
+    @State private var showAddEventView: Bool = false // To trigger navigation to Add Event view
+    @State private var isActive: Bool = false
+
     var body: some View {
-        NavigationStack{
-            NavigationLink(destination: UserHome(), isActive: $userHome) {}
+        NavigationStack {
+            NavigationLink(destination: HostHome(), isActive: $hostHome) {}
             VStack {
                 Spacer()
                 HStack {
@@ -51,21 +54,41 @@ struct EventView: View {
                     await fetchEvents() // Fetch events asynchronously on appearance
                 }
             }
+            .toolbar {
+                // Add "+" button in the top-right corner
+                if isActive {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showAddEventView = true // Trigger navigation
+                        }) {
+                            Image(systemName: "plus")
+                                .font(.title)
+                                .foregroundColor(.white)
+                        }
+                    }
+                }
+            }
+            .onAppear {
+                isActive = true // Set the toolbar state to active
+            }
+            .onDisappear {
+                isActive = false // Clear the toolbar state when navigating away
+            }
+            .navigationDestination(isPresented: $showAddEventView) {
+                CreateEventView()
+            }
         }
     }
 
     // Function to fetch events
     private func fetchEvents() async {
         do {
-            let fetchedEvents = try await viewModel.getEvents()  // Fetch events from the ViewModel
+            let fetchedEvents = viewModel.host?.events  // Fetch events from the ViewModel
             events = fetchedEvents
-        } catch {
-            print("Failed to fetch events: \(error)")
-            events = []  // Handle errors or provide a fallback
         }
     }
 }
 
 #Preview {
-    EventView()
+    HostEventsView()
 }
