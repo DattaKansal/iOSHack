@@ -20,7 +20,7 @@ struct HostEventsView: View {
             VStack {
                 Spacer()
                 HStack {
-                    Text("Events")
+                    Text("Your Events")
                         .font(.system(size: 40))
                         .bold()
                         .foregroundColor(Color.white)
@@ -83,8 +83,11 @@ struct HostEventsView: View {
     // Function to fetch events
     private func fetchEvents() async {
         do {
-            let fetchedEvents = viewModel.host?.events  // Fetch events from the ViewModel
+            let fetchedEvents = try await viewModel.getHostEvents()
             events = fetchedEvents
+        } catch {
+            print("Failed to fetch events: \(error)")
+            events = []  // Handle errors or provide a fallback
         }
     }
 }

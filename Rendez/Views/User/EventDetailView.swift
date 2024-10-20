@@ -18,7 +18,7 @@ struct EventDetailView: View {
     @State private var isActive: Bool = false
     @State private var clientSecret: String?
     @State private var errorMessage: String?
-    
+
     private func startCheckout() {
         let selectedTiers = event.tiers.compactMap { tier -> CheckoutItem? in
             guard let tier = tier, let count = tierCounts[tier.id], count > 0 else { return nil }
@@ -118,98 +118,115 @@ struct EventDetailView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                // Top image
+        NavigationStack {
+            ScrollView {
                 Image(event.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: UIScreen.main.bounds.height * 0.4)
                     .clipped()
-                
-                VStack(alignment: .leading, spacing: 15) {
-                    // Title and organization name
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text(event.title)
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text(event.orgName)
-                            .font(.subheadline)
+                    .ignoresSafeArea()
+                Spacer()
+                VStack(alignment: .leading, spacing: 0) {
+                    // Top image
+
+
+                    VStack(alignment: .leading, spacing: 15) {
+                        // Title and organization name
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(event.title)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                            Text(event.orgName)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        Divider()
+                            .background(Color.secondary)
+
+                        // Description
+                        Text(event.description)
+                            .font(.body)
                             .foregroundColor(.secondary)
-                    }
-                    
-                    // Description
-                    Text(event.description)
-                        .font(.body)
+
+                        Divider()
+                            .background(Color.secondary)
+                        // Address and timings
+                        HStack {
+                            Image(systemName: "location")
+                            Text(event.address)
+                        }
+                        .font(.subheadline)
                         .foregroundColor(.secondary)
-                    
-                    // Address and timings
-                    HStack {
-                        Image(systemName: "location")
-                        Text(event.address)
-                    }
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    
-                    HStack {
-                        Image(systemName: "calendar")
-                        Text(event.date)
-                    }
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    
-                    // Tiers list
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Ticket Tiers")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-//                        print(event.tiers.count)
-                        ForEach(event.tiers.compactMap { $0 }) { tier in
-                            TierView(tier: tier, count: tierCounts[tier.id] ?? 0) { newCount in
-                                tierCounts[tier.id] = newCount
+
+                        HStack {
+                            Image(systemName: "calendar")
+                            Text(event.startDate)
+                        }
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        Divider()
+                            .background(Color.secondary)
+                        // Tiers list
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Ticket Tiers")
+                                .font(.headline)
+                                .foregroundColor(.secondary)
+                            //                        print(event.tiers.count)
+                            ForEach(event.tiers.compactMap { $0 }) { tier in
+                                TierView(tier: tier, count: tierCounts[tier.id] ?? 0) { newCount in
+                                    tierCounts[tier.id] = newCount
+                                }
                             }
                         }
+
+                        Button(action: {
+                            print("Book tickets button tapped")
+                            startCheckout()
+                        }) {
+                            Text("Book Tickets")
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.primary)
+                                .foregroundColor(.white)
+                                .cornerRadius(30)
+                        }
+                        .padding(.top)
+                        .disabled(tierCounts.values.reduce(0, +) == 0)
+
+                        if let errorMessage = errorMessage {
+                            Text(errorMessage)
+                                .foregroundColor(.red)
+                                .padding()
+                        }
+
+                        NavigationLink(
+                            destination: CheckoutView(clientSecret: clientSecret ?? ""),
+                            isActive: $isActive,
+                            label: { EmptyView() }
+                        )
+                        .hidden()
+                        Spacer()
                     }
-                    
-                    Button(action: {
-                        print("Book tickets button tapped")
-                        startCheckout()
-                    }) {
-                        Text("Book Tickets")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.primary)
-                            .foregroundColor(.white)
-                            .cornerRadius(30)
+                    .onChange(of: isActive) { newValue in
+                        print("isActive changed to \(newValue)")
                     }
-                    .padding(.top)
-                    .disabled(tierCounts.values.reduce(0, +) == 0)
-                    
-                    if let errorMessage = errorMessage {
-                        Text(errorMessage)
-                            .foregroundColor(.red)
-                            .padding()
+                    .onChange(of: clientSecret) { newValue in
+                        print("clientSecret changed to \(newValue ?? "nil")")
                     }
-                    
-                    NavigationLink(
-                        destination: CheckoutView(clientSecret: clientSecret ?? ""),
-                        isActive: $isActive,
-                        label: { EmptyView() }
-                    )
-                    .hidden()
                 }
-                .edgesIgnoringSafeArea(.top)
+                .ignoresSafeArea()
                 .background(Color.primaryBackground)
-                .navigationBarTitleDisplayMode(.inline)
-                .onChange(of: isActive) { newValue in
-                    print("isActive changed to \(newValue)")
-                }
-                .onChange(of: clientSecret) { newValue in
-                    print("clientSecret changed to \(newValue ?? "nil")")
-                }
+                .padding(10)
+
             }
+            .scrollIndicators(.hidden)
+            .background(Color.primaryBackground)
+
         }
+        .navigationBarBackButtonHidden(true)
+        .background(Color.primaryBackground)
     }
 }
 

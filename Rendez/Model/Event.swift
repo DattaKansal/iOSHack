@@ -16,17 +16,18 @@ struct Event: Identifiable {
 // let orgImage : String
 //    let distance: Double
     let address: String
-    let date: String
+    let startDate: String
+    let endDate: String
     let imageName: String
     let tiers: [Tier?]
-    let docID: String
+   let docID: String
 
 // let numAttendees: Int
 
-    var totalTickets: Int
+ //   var totalTickets: Int
  //   var pricePerTicket: Double
     var isWaitlistEnabled: Bool
-    var waitlistOpenAfterSoldOut: Int
+ //   var waitlistOpenAfterSoldOut: Int
     var maxTicketsPerPerson: Int
 //    var tieredPricing: Bool
  //   var selectedImage: UIImage?

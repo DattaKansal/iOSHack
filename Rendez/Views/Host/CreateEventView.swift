@@ -9,11 +9,6 @@ import SwiftUI
 import PhotosUI
 
 struct CreateEventView: View {
-//
-//    @State private var tier1Price: Double = 50.0
-//    @State private var tier2Price: Double = 100.0
-//    @State private var tier1Tickets: Int = 50
-//    @State private var tier2Tickets: Int = 50
     
     @State private var numberOfTiers: Int = 1
     @State private var totalTicketsInput: String = "100"
@@ -57,7 +52,7 @@ struct CreateEventView: View {
                             await viewModel.createEvent()
                         }
 
-                        HostHome()
+                        //HostHome()
 
                     }) {
                         Text("Create Event")
@@ -182,7 +177,7 @@ struct CreateEventView: View {
                 VStack {
                     ForEach(0..<tierCount, id: \.self) {index in
                         TextField("Total Tickets", text: $totalTicketsInput, onCommit: {
-                            viewModel.updateTotalTickets()
+                            
                         })
                         .keyboardType(.numberPad)
                         .textFieldStyle(RoundedBorderTextFieldStyle())

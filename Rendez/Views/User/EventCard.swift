@@ -29,7 +29,7 @@ struct EventCard: View {
                         .font(.title)
                         .bold()
                         .foregroundColor(.white)
-                    Label(event.date, systemImage: "calendar")
+                    Label(event.startDate, systemImage: "calendar")
                         .foregroundColor(.secondary)
                     Label("\(event.address)", systemImage: "location")
                         .foregroundColor(.secondary)
