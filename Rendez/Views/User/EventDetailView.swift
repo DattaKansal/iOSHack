@@ -220,6 +220,7 @@ struct EventDetailView: View {
                         .hidden()
                         Spacer()
                     }
+                    .padding(10)
                     .onChange(of: isActive) { newValue in
                         print("isActive changed to \(newValue)")
                     }
@@ -244,7 +245,7 @@ struct EventDetailView: View {
         .background(Color.primaryBackground)
         
         NavigationLink(
-            destination: CheckoutView(clientSecret: clientSecret ?? "", checkoutItems: checkoutItems),
+            destination: CheckoutView(clientSecret: clientSecret ?? "", checkoutItems: checkoutItems, event: event),
             isActive: $isActive,
             label: { EmptyView() }
         )

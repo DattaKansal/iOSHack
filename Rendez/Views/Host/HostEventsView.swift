@@ -17,6 +17,7 @@ struct HostEventsView: View {
     var body: some View {
         NavigationStack {
             NavigationLink(destination: HostHome(), isActive: $hostHome) {}
+            NavigationLink(destination: CreateEventView(), isActive: $showAddEventView) {}
             VStack {
                 Spacer()
                 HStack {
@@ -25,6 +26,14 @@ struct HostEventsView: View {
                         .bold()
                         .foregroundColor(Color.white)
                     Spacer()
+                    Button {
+                        showAddEventView = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.title)
+                            .foregroundColor(.white)
+                    }.padding(.trailing, 25)
+
                 }
                 .padding(.leading, 25)
                 
@@ -53,29 +62,6 @@ struct HostEventsView: View {
                 Task {
                     await fetchEvents() // Fetch events asynchronously on appearance
                 }
-            }
-            .toolbar {
-                // Add "+" button in the top-right corner
-                if isActive {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            showAddEventView = true // Trigger navigation
-                        }) {
-                            Image(systemName: "plus")
-                                .font(.title)
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
-            }
-            .onAppear {
-                isActive = true // Set the toolbar state to active
-            }
-            .onDisappear {
-                isActive = false // Clear the toolbar state when navigating away
-            }
-            .navigationDestination(isPresented: $showAddEventView) {
-                CreateEventView()
             }
         }
     }

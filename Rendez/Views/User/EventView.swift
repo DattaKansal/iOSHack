@@ -37,6 +37,7 @@ struct EventView: View {
                 } else {
                     EventScrollView(events: events ?? [])
                 }
+                Spacer()
             }
             .background(Color.primaryBackground)
             .edgesIgnoringSafeArea(.all)
