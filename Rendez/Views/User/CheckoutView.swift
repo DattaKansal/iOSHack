@@ -16,9 +16,11 @@ struct CheckoutItem: Identifiable, Codable {
 }
 
 struct CheckoutView: View {
+    @StateObject private var viewModel = CheckoutViewModel()
     let clientSecret: String
     let checkoutItems: [CheckoutItem]  // New parameter
-    
+    let event: Event
+
     @State private var paymentMethodParams: STPPaymentMethodParams?
     @State private var message: String = ""
     @State private var isPaymentSuccessful: Bool = false
@@ -59,6 +61,9 @@ struct CheckoutView: View {
         // - Send confirmation email
         // - Log transaction in database
         // - Update event attendance count
+        Task {
+            await viewModel.createTicket(eventTier: "Standard", event: event)
+        }
         print("Payment confirmed successfully")
     }
     

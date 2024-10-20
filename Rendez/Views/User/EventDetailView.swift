@@ -211,9 +211,29 @@ struct EventDetailView: View {
                                 .foregroundColor(.red)
                                 .padding()
                         }
+
+                        NavigationLink(
+                            destination: CheckoutView(clientSecret: clientSecret ?? "", checkoutItems: checkoutItems, event: self.event),
+                            isActive: $isActive,
+                            label: { EmptyView() }
+                        )
+                        .hidden()
+                        Spacer()
                     }
-                    .padding()
-                    .background(Color.primaryBackground)
+                    .onChange(of: isActive) { newValue in
+                        print("isActive changed to \(newValue)")
+                    }
+                    .onChange(of: clientSecret) { newValue in
+                        print("clientSecret changed to \(newValue ?? "nil")")
+                    }
+
+                    
+                    NavigationLink(
+                        destination: CheckoutView(clientSecret: clientSecret ?? "", checkoutItems: checkoutItems, event: event),
+                        isActive: $isActive,
+                        label: { EmptyView() }
+                    )
+                    .hidden()
                 }
             }
             .edgesIgnoringSafeArea(.top)
