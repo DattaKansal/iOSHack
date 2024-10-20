@@ -16,25 +16,21 @@ struct UserHome: View {
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-                .toolbarBackground(Color.secondary, for: .tabBar)
-                .toolbarBackground(.visible, for: .tabBar)
 
             TicketView()
                 .tabItem {
                     Label("Tickets", systemImage: "ticket")
                 }
-                .toolbarBackground(Color.secondary, for: .tabBar)
-                .toolbarBackground(.visible, for: .tabBar)
 
             YouView()
                 .tabItem {
                     Label("You", systemImage: "person")
                 }
-                .toolbarBackground(Color.secondary, for: .tabBar)
-                .toolbarBackground(.visible, for: .tabBar)
-                .toolbarBackgroundVisibility(.visible, for: .tabBar)
         }
-        .tint(Color.primaryBackground)
+        .accentColor(Color.primaryBackground)
+        .onAppear {
+            UITabBar.appearance().backgroundColor = UIColor(Color.secondary)
+        }
     }
 }
 

@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct EventDetailView: View {
+    @Environment(\.presentationMode) var presentationMode
     let event: Event
     @State private var tierCounts: [UUID: Int] = [:]
     @State private var isActive: Bool = false
     @State private var clientSecret: String?
     @State private var errorMessage: String?
     @State private var checkoutItems: [CheckoutItem] = []
-
+    
     private func startCheckout() {
         let selectedTiers = event.tiers.compactMap { tier -> CheckoutItem? in
             guard let count = tierCounts[tier.id], count > 0 else { return nil }
@@ -120,17 +121,32 @@ struct EventDetailView: View {
         }
     }
     
+    
     var body: some View {
         NavigationStack {
             ScrollView {
-                Image(event.imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: UIScreen.main.bounds.height * 0.4)
-                    .clipped()
-                    .ignoresSafeArea()
-                Spacer()
                 VStack(alignment: .leading, spacing: 0) {
+                    ZStack(alignment: .topLeading) {
+                        Image(event.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: UIScreen.main.bounds.height * 0.4)
+                            .clipped()
+                        
+                        // Custom back button
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.black.opacity(0.5))
+                                .clipShape(Circle())
+                        }
+                        .padding(.top, 40)
+                        .padding(.leading, 20)
+                    }
+                    
                     VStack(alignment: .leading, spacing: 15) {
                         // Title and organization name
                         VStack(alignment: .leading, spacing: 5) {
@@ -142,33 +158,31 @@ struct EventDetailView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
-                        Divider()
-                            .background(Color.secondary)
-
-                        // Description
+                        
+                        Divider().background(Color.secondary)
+                        
                         Text(event.description)
                             .font(.body)
                             .foregroundColor(.secondary)
-
-                        Divider()
-                            .background(Color.secondary)
-                        // Address and timings
+                        
+                        Divider().background(Color.secondary)
+                        
                         HStack {
                             Image(systemName: "location")
                             Text(event.address)
                         }
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-
+                        
                         HStack {
                             Image(systemName: "calendar")
                             Text(event.startDate)
                         }
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-                        Divider()
-                            .background(Color.secondary)
-                        // Tiers list
+                        
+                        Divider().background(Color.secondary)
+                        
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Ticket Tiers")
                                 .font(.headline)
@@ -180,11 +194,8 @@ struct EventDetailView: View {
                                 }
                             }
                         }
-
-                        Button(action: {
-                            print("Book tickets button tapped")
-                            startCheckout()
-                        }) {
+                        
+                        Button(action: startCheckout) {
                             Text("Book Tickets")
                                 .frame(maxWidth: .infinity)
                                 .padding()
@@ -194,7 +205,7 @@ struct EventDetailView: View {
                         }
                         .padding(.top)
                         .disabled(tierCounts.values.reduce(0, +) == 0)
-
+                        
                         if let errorMessage = errorMessage {
                             Text(errorMessage)
                                 .foregroundColor(.red)
@@ -224,16 +235,19 @@ struct EventDetailView: View {
                     )
                     .hidden()
                 }
-                .ignoresSafeArea()
-                .background(Color.primaryBackground)
-                .padding(10)
-                .navigationBarTitleDisplayMode(.inline)
             }
-            .scrollIndicators(.hidden)
+            .edgesIgnoringSafeArea(.top)
             .background(Color.primaryBackground)
-
+            .navigationBarHidden(true)
         }
         .navigationBarBackButtonHidden(true)
         .background(Color.primaryBackground)
+        
+        NavigationLink(
+            destination: CheckoutView(clientSecret: clientSecret ?? "", checkoutItems: checkoutItems),
+            isActive: $isActive,
+            label: { EmptyView() }
+        )
+        .hidden()
     }
 }

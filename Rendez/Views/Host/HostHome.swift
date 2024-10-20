@@ -19,12 +19,6 @@ struct HostHome: View {
                     .toolbarBackground(Color.secondary, for: .tabBar)
                     .toolbarBackground(.visible, for: .tabBar)
 
-//                TicketView()
-//                    .tabItem {
-//                        Label("Tickets", systemImage: "ticket")
-//                    }
-//                    .toolbarBackground(Color.secondary, for: .tabBar)
-//                    .toolbarBackground(.visible, for: .tabBar)
 
                 HostYouView()
                     .tabItem {

@@ -6,66 +6,59 @@
 //
 
 import SwiftUI
-
 struct EventView: View {
     @StateObject private var viewModel = UserViewModel()
     @State var events: [Event]? = nil
     @State private var userHome: Bool = false
+    @State private var isGridView: Bool = false
+
     var body: some View {
-        NavigationStack{
-            NavigationLink(destination: UserHome(), isActive: $userHome) {}
-            VStack {
-                Spacer()
+        NavigationStack {
+            VStack(spacing: 0) {
+                Spacer().frame(height: 60) //
                 HStack {
                     Text("Events")
-                        .font(.system(size: 40))
+                        .font(.system(size: 34))
                         .bold()
-                        .foregroundColor(Color.white)
+                        .foregroundColor(.white)
                     Spacer()
-                }
-                .padding(.leading, 25)
-                
-                ZStack {
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 15) {
-                            ForEach(events ?? []) { event in
-                                NavigationLink(destination: EventDetailView(event: event)) {
-                                    EventCard(event: event)
-                                        .shadow(color: Color.black.opacity(0.6), radius: 10, x: 0, y: 10)
-                                }
-                            }
-                        }
-                        Spacer()
+                    Button(action: {
+                        isGridView.toggle()
+                    }) {
+                        Image(systemName: isGridView ? "rectangle.grid.1x2" : "square.grid.2x2")
+                            .foregroundColor(.white)
                     }
-                    .scrollTargetBehavior(.viewAligned)
-                    .safeAreaPadding(.horizontal, 25)
-                    .frame(height: 550)
-                    .scrollIndicators(.hidden)
-                    
                 }
-                Spacer()
+                .padding(.horizontal, 25)
+                .padding(.bottom, 20) 
+                
+                if isGridView {
+                    EventGridView(events: events ?? [])
+                } else {
+                    EventScrollView(events: events ?? [])
+                }
             }
             .background(Color.primaryBackground)
-            .onAppear {
-                Task {
-                    await fetchEvents() // Fetch events asynchronously on appearance
-                }
+            .edgesIgnoringSafeArea(.all)
+        }
+        .onAppear {
+            Task {
+                await fetchEvents()
             }
         }
     }
 
-    // Function to fetch events
     private func fetchEvents() async {
         do {
-            let fetchedEvents = try await viewModel.getEvents()  // Fetch events from the ViewModel
+            let fetchedEvents = try await viewModel.getEvents()
             events = fetchedEvents
         } catch {
             print("Failed to fetch events: \(error)")
-            events = []  // Handle errors or provide a fallback
+            events = []
         }
     }
 }
-//
-//#Preview {
-//    EventView()
-//}
+
+#Preview {
+    EventView()
+}
