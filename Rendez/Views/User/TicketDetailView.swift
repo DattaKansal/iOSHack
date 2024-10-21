@@ -20,7 +20,7 @@ struct TicketDetailView: View {
 
     var body: some View {
         NavigationStack {
-            NavigationLink(destination: TicketView(), isActive: $userHome) {}
+            NavigationLink(destination: UserHome(), isActive: $userHome) {}
             ScrollView {
                 VStack(alignment: .leading) {
                     Spacer()
